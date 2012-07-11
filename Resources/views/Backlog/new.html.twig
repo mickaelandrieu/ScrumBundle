@@ -1,3 +1,7 @@
+{% extends 'NicoBScrumBundle::layout.html.twig' %}
+
+
+{% block content %}
 <h1>Backlog creation</h1>
 
 <form action="{{ path('backlog_create') }}" method="post" {{ form_enctype(form) }}>
@@ -14,3 +18,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}
