@@ -183,19 +183,17 @@ class Backlog {
         return $this->project;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->stories = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add stories
      *
      * @param NicoB\ScrumBundle\Entity\Story $stories
      * @return Backlog
      */
-    public function addStorie(\NicoB\ScrumBundle\Entity\Story $stories)
-    {
+    public function addStorie(\NicoB\ScrumBundle\Entity\Story $stories) {
         $this->stories[] = $stories;
         return $this;
     }
@@ -205,8 +203,7 @@ class Backlog {
      *
      * @param <variableType$stories
      */
-    public function removeStorie(\NicoB\ScrumBundle\Entity\Story $stories)
-    {
+    public function removeStorie(\NicoB\ScrumBundle\Entity\Story $stories) {
         $this->stories->removeElement($stories);
     }
 
@@ -215,8 +212,12 @@ class Backlog {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getStories()
-    {
+    public function getStories() {
         return $this->stories;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
+
 }

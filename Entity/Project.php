@@ -185,4 +185,8 @@ class Project {
     {
         return $this->sandbox;
     }
+    
+    public function __toString(){
+        return $this->name;
+    }
 }

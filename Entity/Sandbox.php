@@ -37,27 +37,25 @@ class Sandbox {
 
     /**
      * @ORM\OneToOne(targetEntity="Project", inversedBy="project")
-     **/
+     * */
     private $project;
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Story", mappedBy="sandbox")
      * 
      */
     private $stories;
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->stories = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -67,8 +65,7 @@ class Sandbox {
      * @param NicoB\ScrumBundle\Entity\Project $project
      * @return Sandbox
      */
-    public function setProject(\NicoB\ScrumBundle\Entity\Project $project = null)
-    {
+    public function setProject(\NicoB\ScrumBundle\Entity\Project $project = null) {
         $this->project = $project;
         return $this;
     }
@@ -78,8 +75,7 @@ class Sandbox {
      *
      * @return NicoB\ScrumBundle\Entity\Project 
      */
-    public function getProject()
-    {
+    public function getProject() {
         return $this->project;
     }
 
@@ -89,8 +85,7 @@ class Sandbox {
      * @param NicoB\ScrumBundle\Entity\Story $stories
      * @return Sandbox
      */
-    public function addStorie(\NicoB\ScrumBundle\Entity\Story $stories)
-    {
+    public function addStorie(\NicoB\ScrumBundle\Entity\Story $stories) {
         $this->stories[] = $stories;
         return $this;
     }
@@ -100,8 +95,7 @@ class Sandbox {
      *
      * @param <variableType$stories
      */
-    public function removeStorie(\NicoB\ScrumBundle\Entity\Story $stories)
-    {
+    public function removeStorie(\NicoB\ScrumBundle\Entity\Story $stories) {
         $this->stories->removeElement($stories);
     }
 
@@ -110,8 +104,12 @@ class Sandbox {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getStories()
-    {
+    public function getStories() {
         return $this->stories;
     }
+
+    public function __toString() {
+        return 'do not instanced';
+    }
+
 }
