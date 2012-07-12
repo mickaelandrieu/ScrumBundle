@@ -42,16 +42,12 @@ class Difficulty {
      */
     protected $name;
 
-
-
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -61,8 +57,7 @@ class Difficulty {
      * @param string $name
      * @return Difficulty
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
         return $this;
     }
@@ -72,8 +67,12 @@ class Difficulty {
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
+
 }

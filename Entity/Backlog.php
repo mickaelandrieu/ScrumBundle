@@ -185,6 +185,7 @@ class Backlog {
 
     public function __construct() {
         $this->stories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime;
     }
 
     /**

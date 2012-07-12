@@ -58,42 +58,44 @@ class Story {
 
     /**
      * @ORM\ManyToOne(targetEntity="Sandbox", inversedBy="stories")
-     **/
+     * */
     private $sandbox;
 
     /**
      * @ORM\ManyToOne(targetEntity="Backlog", inversedBy="stories")
-     **/
+     * */
     private $backlog;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Status")
-     **/
+     * */
     private $status;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Type")
-     **/
+     * */
     private $type;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Priority")
-     **/
+     * */
     private $priority;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Difficulty")
-     **/
+     * */
     private $difficulty;
 
+    public function __construct() {
+        $this->createdAt = new \DateTime;
+    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -103,8 +105,7 @@ class Story {
      * @param datetime $createdAt
      * @return Story
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
         return $this;
     }
@@ -114,8 +115,7 @@ class Story {
      *
      * @return datetime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -125,8 +125,7 @@ class Story {
      * @param string $name
      * @return Story
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
         return $this;
     }
@@ -136,8 +135,7 @@ class Story {
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -147,8 +145,7 @@ class Story {
      * @param text $description
      * @return Story
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
         return $this;
     }
@@ -158,8 +155,7 @@ class Story {
      *
      * @return text 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -169,8 +165,7 @@ class Story {
      * @param NicoB\ScrumBundle\Entity\Sandbox $sandbox
      * @return Story
      */
-    public function setSandbox(\NicoB\ScrumBundle\Entity\Sandbox $sandbox = null)
-    {
+    public function setSandbox(\NicoB\ScrumBundle\Entity\Sandbox $sandbox = null) {
         $this->sandbox = $sandbox;
         return $this;
     }
@@ -180,8 +175,7 @@ class Story {
      *
      * @return NicoB\ScrumBundle\Entity\Sandbox 
      */
-    public function getSandbox()
-    {
+    public function getSandbox() {
         return $this->sandbox;
     }
 
@@ -191,8 +185,7 @@ class Story {
      * @param NicoB\ScrumBundle\Entity\Backlog $backlog
      * @return Story
      */
-    public function setBacklog(\NicoB\ScrumBundle\Entity\Backlog $backlog = null)
-    {
+    public function setBacklog(\NicoB\ScrumBundle\Entity\Backlog $backlog = null) {
         $this->backlog = $backlog;
         return $this;
     }
@@ -202,8 +195,7 @@ class Story {
      *
      * @return NicoB\ScrumBundle\Entity\Backlog 
      */
-    public function getBacklog()
-    {
+    public function getBacklog() {
         return $this->backlog;
     }
 
@@ -213,8 +205,7 @@ class Story {
      * @param NicoB\ScrumBundle\Entity\status $status
      * @return Story
      */
-    public function setStatus(\NicoB\ScrumBundle\Entity\status $status = null)
-    {
+    public function setStatus(\NicoB\ScrumBundle\Entity\status $status = null) {
         $this->status = $status;
         return $this;
     }
@@ -224,8 +215,7 @@ class Story {
      *
      * @return NicoB\ScrumBundle\Entity\status 
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -235,8 +225,7 @@ class Story {
      * @param NicoB\ScrumBundle\Entity\type $type
      * @return Story
      */
-    public function setType(\NicoB\ScrumBundle\Entity\type $type = null)
-    {
+    public function setType(\NicoB\ScrumBundle\Entity\type $type = null) {
         $this->type = $type;
         return $this;
     }
@@ -246,8 +235,7 @@ class Story {
      *
      * @return NicoB\ScrumBundle\Entity\type 
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -257,8 +245,7 @@ class Story {
      * @param NicoB\ScrumBundle\Entity\Priority $priority
      * @return Story
      */
-    public function setPriority(\NicoB\ScrumBundle\Entity\Priority $priority = null)
-    {
+    public function setPriority(\NicoB\ScrumBundle\Entity\Priority $priority = null) {
         $this->priority = $priority;
         return $this;
     }
@@ -268,8 +255,7 @@ class Story {
      *
      * @return NicoB\ScrumBundle\Entity\Priority 
      */
-    public function getPriority()
-    {
+    public function getPriority() {
         return $this->priority;
     }
 
@@ -279,8 +265,7 @@ class Story {
      * @param NicoB\ScrumBundle\Entity\Difficulty $difficulty
      * @return Story
      */
-    public function setDifficulty(\NicoB\ScrumBundle\Entity\Difficulty $difficulty = null)
-    {
+    public function setDifficulty(\NicoB\ScrumBundle\Entity\Difficulty $difficulty = null) {
         $this->difficulty = $difficulty;
         return $this;
     }
@@ -290,8 +275,8 @@ class Story {
      *
      * @return NicoB\ScrumBundle\Entity\Difficulty 
      */
-    public function getDifficulty()
-    {
+    public function getDifficulty() {
         return $this->difficulty;
     }
+
 }

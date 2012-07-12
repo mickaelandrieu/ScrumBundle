@@ -23,16 +23,16 @@
                     <a class="brand" href="{{ path('project') }}">Scrum</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active">
+                            <li class="{% if app.request.attributes.get('_route') == 'project' %}active{% endif %}">
                                 <a href="{{ path('project') }}">Project</a>
                             </li>
-                            <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'backlog' %}active{% endif %}">
                                 <a href="{{ path('backlog') }}">Backlog</a>
                             </li>
-                            <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'story' %}active{% endif %}">
                                 <a href="{{ path('story') }}">Story</a>
                             </li>
-                            <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'User' %}active{% endif %}">
                                 <a href="/">User</a>
                             </li>
                             

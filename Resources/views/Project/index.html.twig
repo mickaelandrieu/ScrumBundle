@@ -5,7 +5,7 @@
 
 <h1>Project list</h1>
 
-<table class="records_list">
+<table class="table records_list">
     <thead>
         <tr>
             <th>Id</th>
@@ -23,10 +23,10 @@
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('project_show', { 'id': entity.id }) }}">show</a>
+                        <a class="btn btn-primary" href="{{ path('project_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">edit</a>
+                        <a class="btn btn-primary" href="{{ path('project_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
             </td>
@@ -37,7 +37,7 @@
 
 <ul>
     <li>
-        <a href="{{ path('project_new') }}">
+        <a class="btn btn-success" href="{{ path('project_new') }}">
             Create a new entry
         </a>
     </li>

@@ -60,7 +60,10 @@ class Project {
      **/
     protected $sandbox;
     
-    
+    public function __construct(){
+        $this->createdAt = new \DateTime;
+        $this->backlog = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
 
     /**
@@ -95,10 +98,6 @@ class Project {
         return $this->name;
     }
     
-    public function __construct()
-    {
-        $this->backlog = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
      * Set createdAt

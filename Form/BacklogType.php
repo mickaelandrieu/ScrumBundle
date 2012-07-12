@@ -12,7 +12,6 @@ class BacklogType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('createdAt')
             ->add('startAt')
             ->add('finishAt')
             ->add('project')

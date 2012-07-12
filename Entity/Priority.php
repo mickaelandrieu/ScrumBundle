@@ -43,16 +43,12 @@ class Priority {
      */
     protected $name;
 
-
-
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -62,8 +58,7 @@ class Priority {
      * @param string $name
      * @return Priority
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
         return $this;
     }
@@ -73,8 +68,12 @@ class Priority {
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
+
 }

@@ -21,7 +21,7 @@
     <li>
         <form action="{{ path('backlog_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button class="btn btn-success" type="submit">Delete</button>
         </form>
     </li>
 </ul>
