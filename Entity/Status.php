@@ -38,7 +38,7 @@ class Status {
     /**
      * @var string $name
      *
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=30)
      */
     protected $name;
 

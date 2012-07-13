@@ -39,7 +39,7 @@ class Priority {
     /**
      * @var string $name
      *
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="integer", length=1)
      */
     protected $name;
 
@@ -73,7 +73,7 @@ class Priority {
     }
 
     public function __toString() {
-        return $this->name;
+        return (string)$this->name;
     }
 
 }

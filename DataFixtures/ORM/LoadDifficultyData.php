@@ -13,7 +13,7 @@ class LoadDifficultyData implements FixtureInterface {
      */
     public function load(ObjectManager $manager) {
 
-        $names = array('truc', 'truc', 'truc', 'truc');
+        $names = range(1,5);
         foreach($names as $name) {
             $entity = new Difficulty();
             $entity->setName($name);

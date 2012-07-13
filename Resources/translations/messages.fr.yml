@@ -1,0 +1,13 @@
+nicob:
+  scrum:
+    type:
+      task: task
+      buy: buy
+      release: release
+      chore: chore
+    status:
+      started: started
+      finished: finished
+      delivered: delivered
+      accepted: accepted
+      rejected: rejected

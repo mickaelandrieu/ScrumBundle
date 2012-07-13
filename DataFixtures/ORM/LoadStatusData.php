@@ -13,7 +13,13 @@ class LoadStatusData implements FixtureInterface {
      */
     public function load(ObjectManager $manager) {
 
-        $names = array('truc', 'truc', 'truc', 'truc');
+        $names = array(
+            'nicob.scrum.status.started', 
+            'nicob.scrum.status.finished', 
+            'nicob.scrum.status.delivered', 
+            'nicob.scrum.status.accepted',
+            'nicob.scrum.status.rejected'
+        );
         foreach($names as $name) {
             $entity = new Status();
             $entity->setName($name);

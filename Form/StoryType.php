@@ -13,7 +13,9 @@ class StoryType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('backlog')
+            ->add('backlog',null,[
+                    'required' => false
+            ])
             ->add('status')
             ->add('type')
             ->add('priority')

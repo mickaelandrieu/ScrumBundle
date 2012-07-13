@@ -1,0 +1,24 @@
+{% extends 'NicoBScrumBundle::layout.html.twig' %}
+
+
+{% block content %}
+
+{% for backlog in backlogs %}
+<div class="row-fluid">
+    <div class="span6">
+        STATS
+    </div>
+    <div class="span6">
+        <h3>{{ backlog.name }}</h3>
+        {% for story in backlog.stories %}
+            <div>{{ story.name }}</div>
+            <div>{{ story.difficulty.name }}</div>
+            <div>{{ story.priority.name }}</div>
+            <div>{{ story.status.name }}</div>
+            <div>{{ story.type.name }}</div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

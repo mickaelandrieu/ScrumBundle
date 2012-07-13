@@ -18,11 +18,34 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('nico_b_scrum');
+        $rootNode = $treeBuilder->root('nicob_scrum');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+        ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('class')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('backlog')->defaultValue('NicoB\ScrumBundle\Entity\Backlog')->cannotBeEmpty()->end()
+                        ->scalarNode('difficulty')->defaultValue('NicoB\ScrumBundle\Entity\Difficulty')->cannotBeEmpty()->end()
+                        ->scalarNode('priority')->defaultValue('NicoB\ScrumBundle\Entity\Priority')->cannotBeEmpty()->end()
+                        ->scalarNode('project')->defaultValue('NicoB\ScrumBundle\Entity\Project')->cannotBeEmpty()->end()
+                        ->scalarNode('sandbox')->defaultValue('NicoB\ScrumBundle\Entity\Sandbox')->cannotBeEmpty()->end()
+                        ->scalarNode('status')->defaultValue('NicoB\ScrumBundle\Entity\Status')->cannotBeEmpty()->end()
+                        ->scalarNode('story')->defaultValue('NicoB\ScrumBundle\Entity\Story')->cannotBeEmpty()->end()
+                        ->scalarNode('type')->defaultValue('NicoB\ScrumBundle\Entity\Type')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+                ->arrayNode('manager')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('backlog')->defaultValue('nicob.scrum.manager.backlog.default')->cannotBeEmpty()->end()
+                        ->scalarNode('project')->defaultValue('nicob.scrum.manager.project.default')->cannotBeEmpty()->end()
+                        ->scalarNode('story')->defaultValue('nicob.scrum.manager.story.default')->cannotBeEmpty()->end()
+                        ->scalarNode('sandbox')->defaultValue('nicob.scrum.manager.sandbox.default')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

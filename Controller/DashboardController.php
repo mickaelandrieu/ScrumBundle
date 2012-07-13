@@ -6,14 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
-{
+
+class DashboardController extends Controller {
+
     /**
-     * @Route("/hello/{name}")
+     * @Route("/",name="home")
      * @Template()
      */
-    public function indexAction($name)
-    {
-        return array('name' => $name);
+    public function indexAction() {
+        
+        $backlogs = $this->get('nicob.scrum.manager.backlog')->findBy(['project'=>5]);
+        
+        return array('backlogs' => $backlogs);
     }
+
+
 }

@@ -13,7 +13,7 @@ class LoadTypeData implements FixtureInterface {
      */
     public function load(ObjectManager $manager) {
 
-        $names = array('truc', 'truc', 'truc', 'truc');
+        $names = array('nicob.scrum.type.task', 'nicob.scrum.type.buy', 'nicob.scrum.type.release', 'nicob.scrum.type.chore');
         foreach($names as $name) {
             $entity = new Type();
             $entity->setName($name);

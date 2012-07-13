@@ -10,7 +10,7 @@
 
     </head>
     <body>
-
+        
 
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
@@ -20,8 +20,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="brand" href="{{ path('project') }}">Scrum</a>
+                    <a class="brand" href="{{ path('home') }}">Scrum Dashboard</a>
                     <div class="nav-collapse collapse">
+
                         <ul class="nav">
                             <li class="{% if app.request.attributes.get('_route') == 'project' %}active{% endif %}">
                                 <a href="{{ path('project') }}">Project</a>
