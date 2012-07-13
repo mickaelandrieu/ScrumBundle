@@ -1,16 +1,16 @@
 services:
-    nicob.scrum.manager.backlog.default: 
+    nicob.scrum.backlog.manager.default: 
         class: NicoB\ScrumBundle\Manager\BacklogManager
-        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.class.backlog%]
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.backlog.class%]
 
-    nicob.scrum.manager.project.default:
+    nicob.scrum.project.manager.default:
         class: NicoB\ScrumBundle\Manager\ProjectManager
-        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.class.project%]
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.project.class%]
 
-    nicob.scrum.manager.sandbox.default:
+    nicob.scrum.sandbox.manager.default:
         class: NicoB\ScrumBundle\Manager\SandboxManager
-        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.class.sandbox%]
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.sandbox.class%]
 
-    nicob.scrum.manager.story.default:
+    nicob.scrum.story.manager.default:
         class: NicoB\ScrumBundle\Manager\StoryManager
-        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.class.story%]
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.story.class%]

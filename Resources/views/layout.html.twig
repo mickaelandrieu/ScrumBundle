@@ -33,8 +33,11 @@
                             <li class="{% if app.request.attributes.get('_route') == 'story' %}active{% endif %}">
                                 <a href="{{ path('story') }}">Story</a>
                             </li>
-                            <li class="{% if app.request.attributes.get('_route') == 'User' %}active{% endif %}">
-                                <a href="/">User</a>
+                            <li class="{% if app.request.attributes.get('_route') == 'fos_user_profile_edit' %}active{% endif %}">
+                                <a href="{{ path('fos_user_profile_edit') }}">User</a>
+                            </li>
+                            <li class="{% if app.request.attributes.get('_route') == 'fos_user_security_logout' %}active{% endif %}">
+                                <a href="{{ path('fos_user_security_logout') }}">LogOut</a>
                             </li>
                             
                         </ul>

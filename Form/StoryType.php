@@ -20,6 +20,9 @@ class StoryType extends AbstractType
             ->add('type')
             ->add('priority')
             ->add('difficulty')
+            ->add('assignedAt',null,[
+                    'required' => false
+            ])
         ;
     }
 

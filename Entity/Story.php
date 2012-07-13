@@ -85,6 +85,19 @@ class Story {
      * @ORM\OneToOne(targetEntity="Difficulty")
      * */
     private $difficulty;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * 
+     */
+    protected $createdBy;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * 
+     */
+    protected $assignedAt;
+    
 
     public function __construct() {
         $this->createdAt = new \DateTime;
@@ -279,4 +292,48 @@ class Story {
         return $this->difficulty;
     }
 
+
+    /**
+     * Set createdBy
+     *
+     * @param NicoB\ScrumBundle\Entity\User $createdBy
+     * @return Story
+     */
+    public function setCreatedBy(\NicoB\ScrumBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return NicoB\ScrumBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Set assignedAt
+     *
+     * @param NicoB\ScrumBundle\Entity\User $assignedAt
+     * @return Story
+     */
+    public function setAssignedAt(\NicoB\ScrumBundle\Entity\User $assignedAt = null)
+    {
+        $this->assignedAt = $assignedAt;
+        return $this;
+    }
+
+    /**
+     * Get assignedAt
+     *
+     * @return NicoB\ScrumBundle\Entity\User 
+     */
+    public function getAssignedAt()
+    {
+        return $this->assignedAt;
+    }
 }

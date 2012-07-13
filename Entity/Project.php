@@ -49,6 +49,12 @@ class Project {
     protected $backlogs;
     
     /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * 
+     */
+    protected $createdBy;
+    
+    /**
      * @var datetime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -187,5 +193,27 @@ class Project {
     
     public function __toString(){
         return $this->name;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param NicoB\ScrumBundle\Entity\User $createdBy
+     * @return Project
+     */
+    public function setCreatedBy(\NicoB\ScrumBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return NicoB\ScrumBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }
