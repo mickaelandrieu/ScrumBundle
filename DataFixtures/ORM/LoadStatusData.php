@@ -14,6 +14,7 @@ class LoadStatusData implements FixtureInterface {
     public function load(ObjectManager $manager) {
 
         $names = array(
+            'nicob.scrum.status.not_yet_started', 
             'nicob.scrum.status.started', 
             'nicob.scrum.status.finished', 
             'nicob.scrum.status.delivered', 

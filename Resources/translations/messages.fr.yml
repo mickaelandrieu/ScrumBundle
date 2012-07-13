@@ -11,3 +11,4 @@ nicob:
       delivered: delivered
       accepted: accepted
       rejected: rejected
+      not_yet_started: not yet started
