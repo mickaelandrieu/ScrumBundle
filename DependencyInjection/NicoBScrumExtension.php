@@ -22,20 +22,32 @@ class NicoBScrumExtension extends Extension {
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $container->setParameter('nicob.scrum.backlog.class', $config['class']['backlog']);
-        $container->setParameter('nicob.scrum.difficulty.class', $config['class']['difficulty']);
-        $container->setParameter('nicob.scrum.priority.class', $config['class']['priority']);
-        $container->setParameter('nicob.scrum.project.class', $config['class']['project']);
-        $container->setParameter('nicob.scrum.sandbox.class', $config['class']['sandbox']);
-        $container->setParameter('nicob.scrum.status.class', $config['class']['status']);
-        $container->setParameter('nicob.scrum.story.class', $config['class']['story']);
-        $container->setParameter('nicob.scrum.type.class', $config['class']['type']);
+        $container->setParameter('nicob.scrum.backlog.class', $config['backlog']['class']);
+        $container->setParameter('nicob.scrum.project.class', $config['project']['class']);
+        $container->setParameter('nicob.scrum.sandbox.class', $config['sandbox']['class']);
+        $container->setParameter('nicob.scrum.story.class', $config['story']['class']);
+        
+        $container->setParameter('nicob.scrum.backlog.form.name', $config['backlog']['form']['name']);
+        $container->setParameter('nicob.scrum.project.form.name', $config['project']['form']['name']);
+        $container->setParameter('nicob.scrum.story.form.name', $config['story']['form']['name']);
 
         $loader->load('services.yml');
-        $container->setAlias('nicob.scrum.backlog.manager', $config['manager']['backlog']);
-        $container->setAlias('nicob.scrum.project.manager', $config['manager']['project']);
-        $container->setAlias('nicob.scrum.story.manager', $config['manager']['story']);
-        $container->setAlias('nicob.scrum.sandbox.manager', $config['manager']['sandbox']);
+        
+        $container->setAlias('nicob.scrum.backlog.manager', $config['backlog']['manager']);
+        $container->setAlias('nicob.scrum.project.manager', $config['project']['manager']);
+        $container->setAlias('nicob.scrum.story.manager', $config['story']['manager']);
+        $container->setAlias('nicob.scrum.sandbox.manager', $config['sandbox']['manager']);
+
+
+        $container->setAlias('nicob.scrum.backlog.form.handler', $config['backlog']['form']['handler']);
+
+        $container->setAlias('nicob.scrum.project.form.handler', $config['project']['form']['handler']);
+
+        $container->setAlias('nicob.scrum.story.form.handler', $config['story']['form']['handler']);
+
+
+
+
     }
 
 }

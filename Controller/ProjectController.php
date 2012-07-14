@@ -15,20 +15,17 @@ use NicoB\ScrumBundle\Entity\Sandbox;
  *
  * @Route("/project")
  */
-class ProjectController extends Controller
-{
+class ProjectController extends Controller {
+
     /**
      * Lists all Project entities.
      *
      * @Route("/", name="project")
      * @Template()
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('NicoBScrumBundle:Project')->findAll();
-
+    public function indexAction() {
+        $manager = $this->get('nicob.scrum.project.manager');
+        $entities = $manager->findAll();
         return array(
             'entities' => $entities,
         );
@@ -40,71 +37,42 @@ class ProjectController extends Controller
      * @Route("/{id}/show", name="project_show")
      * @Template()
      */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('NicoBScrumBundle:Project')->find($id);
-
-        if (!$entity) {
+    public function showAction($id) {
+        $manager = $this->get('nicob.scrum.project.manager');
+        $project = $manager->find($id);
+        
+        if (!$project) {
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to create a new Project entity.
-     *
-     * @Route("/new", name="project_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Project();
-        $form   = $this->createForm(new ProjectType(), $entity);
-
-        return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
      * Creates a new Project entity.
      *
-     * @Route("/create", name="project_create")
-     * @Method("post")
+     * @Route("/create", name="project_new")
      * @Template("NicoBScrumBundle:Project:new.html.twig")
      */
-    public function createAction()
-    {
-        $entity  = new Project();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new ProjectType(), $entity);
-        $form->bindRequest($request);
+    public function newAction() {
+        $handler = $this->get('nicob.scrum.project.form.handler');
+        $manager = $this->get('nicob.scrum.project.manager');
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            
-            
-            $sandbox = new Sandbox();
-            $entity->setSandbox($sandbox);
-            
-            $em->persist($entity);
-            $em->flush();
+        if ($handler->process()) {
+            $project = $handler->getForm()->getData();
+            $manager->update($project);
 
-            return $this->redirect($this->generateUrl('project_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('project_show', array('id' => $project->getId())));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'entity' => $project,
+            'form' => $handler->getForm()->createView(),
         );
     }
 
@@ -114,61 +82,25 @@ class ProjectController extends Controller
      * @Route("/{id}/edit", name="project_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    public function editAction($id) {
+        $handler = $this->get('nicob.scrum.project.form.handler');
+        $manager = $this->get('nicob.scrum.project.manager');
+        $project = $manager->find($id);
 
-        $entity = $em->getRepository('NicoBScrumBundle:Project')->find($id);
-
-        if (!$entity) {
+        if (!$project) {
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
-        $editForm = $this->createForm(new ProjectType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        if ($handler->process($project)) {
+            $project = $handler->getForm()->getData();
+            $manager->update($project);
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Project entity.
-     *
-     * @Route("/{id}/update", name="project_update")
-     * @Method("post")
-     * @Template("NicoBScrumBundle:Project:edit.html.twig")
-     */
-    public function updateAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('NicoBScrumBundle:Project')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
-        }
-
-        $editForm   = $this->createForm(new ProjectType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('project_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('project_show', array('id' => $project->getId())));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $project,
+            'form' => $handler->getForm()->createView(),
         );
     }
 
@@ -176,35 +108,19 @@ class ProjectController extends Controller
      * Deletes a Project entity.
      *
      * @Route("/{id}/delete", name="project_delete")
-     * @Method("post")
+     * @Method("get")
      */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+    public function deleteAction($id) {
+        $manager = $this->get('nicob.scrum.project.manager');
+        $project = $manager->find($id);
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('NicoBScrumBundle:Project')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Project entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$project) {
+            throw $this->createNotFoundException('Unable to find Project entity.');
         }
+
+        $manager->delete($project);
 
         return $this->redirect($this->generateUrl('project'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
 }
