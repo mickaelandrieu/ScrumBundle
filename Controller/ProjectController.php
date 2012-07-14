@@ -39,17 +39,10 @@ class ProjectController extends Controller {
      */
     public function showAction($id) {
         $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id);
+        $project = $manager->find($id,true);
         
-        if (!$project) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $project
         );
     }
 
@@ -67,11 +60,10 @@ class ProjectController extends Controller {
             $project = $handler->getForm()->getData();
             $manager->update($project);
 
-            return $this->redirect($this->generateUrl('project_show', array('id' => $project->getId())));
+            return $this->redirect($this->generateUrl('project'));
         }
 
         return array(
-            'entity' => $project,
             'form' => $handler->getForm()->createView(),
         );
     }
@@ -85,17 +77,13 @@ class ProjectController extends Controller {
     public function editAction($id) {
         $handler = $this->get('nicob.scrum.project.form.handler');
         $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id);
-
-        if (!$project) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
-        }
+        $project = $manager->find($id,true);
 
         if ($handler->process($project)) {
             $project = $handler->getForm()->getData();
             $manager->update($project);
 
-            return $this->redirect($this->generateUrl('project_show', array('id' => $project->getId())));
+            return $this->redirect($this->generateUrl('project'));
         }
 
         return array(
@@ -112,11 +100,7 @@ class ProjectController extends Controller {
      */
     public function deleteAction($id) {
         $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id);
-
-        if (!$project) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
-        }
+        $project = $manager->find($id,true);
 
         $manager->delete($project);
 

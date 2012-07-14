@@ -20,7 +20,6 @@ services:
     nicob.scrum.story.form.type.default:
       class: NicoB\ScrumBundle\Form\Type\StoryFormType
       arguments: [%nicob.scrum.story.class%]
-      scope: request
       tags:
           - { name: form.type, alias:nicob.scrum.story.form.type  }
           
@@ -40,19 +39,18 @@ services:
     nicob.scrum.project.form.type.default:
       class: NicoB\ScrumBundle\Form\Type\ProjectFormType
       arguments: [%nicob.scrum.project.class%]
-      scope: request
       tags:
-          - { name: form.type, alias: 'nicob.scrum.project.form.type' }
+          - { name: form.type }
           
     nicob.scrum.project.form:
         factory_method: createNamed
         factory_service: form.factory
         class: Symfony\Component\Form\Form
-        arguments: [%nicob.scrum.project.form.name%,nicob.scrum.project.form.type ]
+        arguments: [%nicob.scrum.project.form.name%, @nicob.scrum.project.form.type ]
     
     nicob.scrum.project.form.handler.default:
       class: NicoB\ScrumBundle\Form\Handler\ProjectFormHandler
-      arguments: [@nicob.scrum.project.form, @nicob.scrum.project.manager ]
+      arguments: [@nicob.scrum.project.form, @request ]
       scope: request
       
         
@@ -60,9 +58,8 @@ services:
     nicob.scrum.backlog.form.type.default:
       class: NicoB\ScrumBundle\Form\Type\BacklogFormType
       arguments: [%nicob.scrum.backlog.class%]
-      scope: request
       tags:
-          - { name: form.type, alias:nicob.scrum.backlog.form.type }
+          - { name: form.type }
           
     nicob.scrum.backlog.form:
         factory_method: createNamed

@@ -42,6 +42,7 @@ class NicoBScrumExtension extends Extension {
         $container->setAlias('nicob.scrum.backlog.form.handler', $config['backlog']['form']['handler']);
 
         $container->setAlias('nicob.scrum.project.form.handler', $config['project']['form']['handler']);
+        $container->setAlias('nicob.scrum.project.form.type', $config['project']['form']['type']);
 
         $container->setAlias('nicob.scrum.story.form.handler', $config['story']['form']['handler']);
 

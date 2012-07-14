@@ -2,6 +2,7 @@
 
 namespace NicoB\ScrumBundle\Manager;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /*
  * This file is part of the NicoBScrumBundle package.
  *
@@ -64,9 +65,13 @@ trait BaseManager {
         return $this->repository->findBy($criteria);
     }
     
-    public function find($id)
+    public function find($id,$exception = false)
     {
-        return $this->repository->find($id);
+        $entity = $this->repository->find($id);
+        if ($exception && !$entity) {
+            throw new NotFoundHttpException('Unable to find Project entity.');
+        }
+        return $entity;
     }
     
     public function findAll()
