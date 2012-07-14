@@ -6,199 +6,103 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use NicoB\ScrumBundle\Entity\Story;
-use NicoB\ScrumBundle\Form\StoryType;
+
 
 /**
- * Story controller.
+ * Project controller.
  *
  * @Route("/story")
  */
-class StoryController extends Controller
-{
+class StoryController extends Controller {
+
     /**
-     * Lists all Story entities.
+     * Lists all Project entities.
      *
      * @Route("/", name="story")
      * @Template()
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('NicoBScrumBundle:Story')->findAll();
-
+    public function indexAction() {
+        $manager = $this->get('nicob.scrum.story.manager');
+        $entities = $manager->findAll();
         return array(
             'entities' => $entities,
         );
     }
 
     /**
-     * Finds and displays a Story entity.
+     * Finds and displays a Project entity.
      *
      * @Route("/{id}/show", name="story_show")
      * @Template()
      */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('NicoBScrumBundle:Story')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Story entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
+    public function showAction($id) {
+        $manager = $this->get('nicob.scrum.story.manager');
+        $story = $manager->find($id,true);
+        
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $story
         );
     }
 
     /**
-     * Displays a form to create a new Story entity.
+     * Creates a new Project entity.
      *
-     * @Route("/new", name="story_new")
+     * @Route("/create", name="story_new")
      * @Template()
      */
-    public function newAction()
-    {
-        $entity = new Story();
-        $form   = $this->createForm(new StoryType(), $entity);
+    public function newAction() {
+        $handler = $this->get('nicob.scrum.story.form.handler');
+        $manager = $this->get('nicob.scrum.story.manager');
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
+        if ($handler->process()) {
+            $story = $handler->getForm()->getData();
+            $manager->update($story);
 
-    /**
-     * Creates a new Story entity.
-     *
-     * @Route("/create", name="story_create")
-     * @Method("post")
-     * @Template("NicoBScrumBundle:Story:new.html.twig")
-     */
-    public function createAction()
-    {
-        $entity  = new Story();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new StoryType(), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('story_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('story'));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $handler->getForm()->createView(),
         );
     }
 
     /**
-     * Displays a form to edit an existing Story entity.
+     * Displays a form to edit an existing Project entity.
      *
      * @Route("/{id}/edit", name="story_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    public function editAction($id) {
+        $handler = $this->get('nicob.scrum.story.form.handler');
+        $manager = $this->get('nicob.scrum.story.manager');
+        $story = $manager->find($id,true);
 
-        $entity = $em->getRepository('NicoBScrumBundle:Story')->find($id);
+        if ($handler->process($story)) {
+            $story = $handler->getForm()->getData();
+            $manager->update($story);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Story entity.');
+            return $this->redirect($this->generateUrl('story'));
         }
 
-        $editForm = $this->createForm(new StoryType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $story,
+            'form' => $handler->getForm()->createView(),
         );
     }
 
     /**
-     * Edits an existing Story entity.
-     *
-     * @Route("/{id}/update", name="story_update")
-     * @Method("post")
-     * @Template("NicoBScrumBundle:Story:edit.html.twig")
-     */
-    public function updateAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('NicoBScrumBundle:Story')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Story entity.');
-        }
-
-        $editForm   = $this->createForm(new StoryType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('story_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Deletes a Story entity.
+     * Deletes a Project entity.
      *
      * @Route("/{id}/delete", name="story_delete")
-     * @Method("post")
+     * @Method("get")
      */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+    public function deleteAction($id) {
+        $manager = $this->get('nicob.scrum.story.manager');
+        $story = $manager->find($id,true);
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('NicoBScrumBundle:Story')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Story entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
+        $manager->delete($story);
 
         return $this->redirect($this->generateUrl('story'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
 }

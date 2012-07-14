@@ -6,199 +6,103 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use NicoB\ScrumBundle\Entity\Backlog;
-use NicoB\ScrumBundle\Form\BacklogType;
+
 
 /**
- * Backlog controller.
+ * Project controller.
  *
  * @Route("/backlog")
  */
-class BacklogController extends Controller
-{
+class BacklogController extends Controller {
+
     /**
-     * Lists all Backlog entities.
+     * Lists all Project entities.
      *
      * @Route("/", name="backlog")
      * @Template()
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('NicoBScrumBundle:Backlog')->findAll();
-
+    public function indexAction() {
+        $manager = $this->get('nicob.scrum.backlog.manager');
+        $entities = $manager->findAll();
         return array(
             'entities' => $entities,
         );
     }
 
     /**
-     * Finds and displays a Backlog entity.
+     * Finds and displays a Project entity.
      *
      * @Route("/{id}/show", name="backlog_show")
      * @Template()
      */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('NicoBScrumBundle:Backlog')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Backlog entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
+    public function showAction($id) {
+        $manager = $this->get('nicob.scrum.backlog.manager');
+        $backlog = $manager->find($id,true);
+        
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $backlog
         );
     }
 
     /**
-     * Displays a form to create a new Backlog entity.
+     * Creates a new Project entity.
      *
-     * @Route("/new", name="backlog_new")
+     * @Route("/create", name="backlog_new")
      * @Template()
      */
-    public function newAction()
-    {
-        $entity = new Backlog();
-        $form   = $this->createForm(new BacklogType(), $entity);
+    public function newAction() {
+        $handler = $this->get('nicob.scrum.backlog.form.handler');
+        $manager = $this->get('nicob.scrum.backlog.manager');
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
+        if ($handler->process()) {
+            $backlog = $handler->getForm()->getData();
+            $manager->update($backlog);
 
-    /**
-     * Creates a new Backlog entity.
-     *
-     * @Route("/create", name="backlog_create")
-     * @Method("post")
-     * @Template("NicoBScrumBundle:Backlog:new.html.twig")
-     */
-    public function createAction()
-    {
-        $entity  = new Backlog();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new BacklogType(), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('backlog_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backlog'));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $handler->getForm()->createView(),
         );
     }
 
     /**
-     * Displays a form to edit an existing Backlog entity.
+     * Displays a form to edit an existing Project entity.
      *
      * @Route("/{id}/edit", name="backlog_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
+    public function editAction($id) {
+        $handler = $this->get('nicob.scrum.backlog.form.handler');
+        $manager = $this->get('nicob.scrum.backlog.manager');
+        $backlog = $manager->find($id,true);
 
-        $entity = $em->getRepository('NicoBScrumBundle:Backlog')->find($id);
+        if ($handler->process($backlog)) {
+            $backlog = $handler->getForm()->getData();
+            $manager->update($backlog);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Backlog entity.');
+            return $this->redirect($this->generateUrl('backlog'));
         }
 
-        $editForm = $this->createForm(new BacklogType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $backlog,
+            'form' => $handler->getForm()->createView(),
         );
     }
 
     /**
-     * Edits an existing Backlog entity.
-     *
-     * @Route("/{id}/update", name="backlog_update")
-     * @Method("post")
-     * @Template("NicoBScrumBundle:Backlog:edit.html.twig")
-     */
-    public function updateAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('NicoBScrumBundle:Backlog')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Backlog entity.');
-        }
-
-        $editForm   = $this->createForm(new BacklogType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('backlog_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Deletes a Backlog entity.
+     * Deletes a Project entity.
      *
      * @Route("/{id}/delete", name="backlog_delete")
-     * @Method("post")
+     * @Method("get")
      */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+    public function deleteAction($id) {
+        $manager = $this->get('nicob.scrum.backlog.manager');
+        $backlog = $manager->find($id,true);
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('NicoBScrumBundle:Backlog')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Backlog entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
+        $manager->delete($backlog);
 
         return $this->redirect($this->generateUrl('backlog'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
 }

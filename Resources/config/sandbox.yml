@@ -1,0 +1,5 @@
+services:
+    nicob.scrum.sandbox.manager.default:
+        class: NicoB\ScrumBundle\Manager\SandboxManager
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.sandbox.class%]
+

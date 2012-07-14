@@ -4,6 +4,7 @@ namespace NicoB\ScrumBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -21,23 +22,20 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('nicob_scrum');
 
         $rootNode
-        ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('backlog')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('manager')->defaultValue('nicob.scrum.backlog.manager.default')->cannotBeEmpty()->end()
-                        ->scalarNode('class')->defaultValue('NicoB\ScrumBundle\Entity\Backlog')->cannotBeEmpty()->end()
-                        ->arrayNode('form')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('type')->defaultValue('nicob.scrum.backlog.form.type.default')->cannotBeEmpty()->end()
-                                ->scalarNode('handler')->defaultValue('nicob.scrum.backlog.form.handler.default')->cannotBeEmpty()->end()
-                                ->scalarNode('name')->defaultValue('backlog_form')->cannotBeEmpty()->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
+        ->addDefaultsIfNotSet();
+
+        $this->addProjectSection($rootNode);
+        $this->addBacklogSection($rootNode);
+        $this->addSandboxSection($rootNode);
+        $this->addStorySection($rootNode);
+        
+        
+        return $treeBuilder;
+    }
+    private function addProjectSection(ArrayNodeDefinition $node)
+    {
+        $node
+        ->children()
                 ->arrayNode('project')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -53,6 +51,49 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+         ->end()
+        ;
+    }
+    private function addBacklogSection(ArrayNodeDefinition $node)
+    {
+        $node
+        ->children()
+                ->arrayNode('backlog')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('manager')->defaultValue('nicob.scrum.backlog.manager.default')->cannotBeEmpty()->end()
+                        ->scalarNode('class')->defaultValue('NicoB\ScrumBundle\Entity\Backlog')->cannotBeEmpty()->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('type')->defaultValue('nicob.scrum.backlog.form.type.default')->cannotBeEmpty()->end()
+                                ->scalarNode('handler')->defaultValue('nicob.scrum.backlog.form.handler.default')->cannotBeEmpty()->end()
+                                ->scalarNode('name')->defaultValue('backlog_form')->cannotBeEmpty()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+         ->end()
+        ;
+    }
+    private function addSandboxSection(ArrayNodeDefinition $node)
+    {
+        $node
+        ->children()
+               ->arrayNode('sandbox')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('manager')->defaultValue('nicob.scrum.sandbox.manager.default')->cannotBeEmpty()->end()
+                        ->scalarNode('class')->defaultValue('NicoB\ScrumBundle\Entity\Sandbox')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
+         ->end()
+        ;
+    }
+    private function addStorySection(ArrayNodeDefinition $node)
+    {
+        $node
+        ->children()
                 ->arrayNode('story')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -68,15 +109,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('sandbox')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('manager')->defaultValue('nicob.scrum.sandbox.manager.default')->cannotBeEmpty()->end()
-                        ->scalarNode('class')->defaultValue('NicoB\ScrumBundle\Entity\Sandbox')->cannotBeEmpty()->end()
-                    ->end()
-                ->end()
-            ->end();
-
-        return $treeBuilder;
+         ->end()
+        ;
     }
 }

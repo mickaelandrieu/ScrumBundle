@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Backlog creation</h1>
 
-<form action="{{ path('backlog_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('backlog_new') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>

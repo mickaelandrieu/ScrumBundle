@@ -6,9 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use NicoB\ScrumBundle\Entity\Project;
-use NicoB\ScrumBundle\Form\ProjectType;
-use NicoB\ScrumBundle\Entity\Sandbox;
+
 
 /**
  * Project controller.

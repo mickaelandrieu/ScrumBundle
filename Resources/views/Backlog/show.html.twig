@@ -19,14 +19,6 @@
             <th>Createdat</th>
             <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
         </tr>
-        <tr>
-            <th>Startat</th>
-            <td>{{ entity.startAt|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Finishat</th>
-            <td>{{ entity.finishAt|date('Y-m-d H:i:s') }}</td>
-        </tr>
     </tbody>
 </table>
 
@@ -42,10 +34,7 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('backlog_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button class="btn btn-danger" type="submit">Delete</button>
-        </form>
+        <a class="btn btn-danger" href="{{ path('backlog_delete',{'id':entity.id}) }}">Delete</a>
     </li>
 </ul>
 {% endblock %}

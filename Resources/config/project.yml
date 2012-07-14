@@ -1,0 +1,21 @@
+services:      
+    nicob.scrum.project.manager.default:
+        class: NicoB\ScrumBundle\Manager\ProjectManager
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.project.class%]  
+        
+    nicob.scrum.project.form.type.default:
+      class: NicoB\ScrumBundle\Form\Type\ProjectFormType
+      arguments: [%nicob.scrum.project.class%]
+      tags:
+          - { name: form.type }
+          
+    nicob.scrum.project.form:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: Symfony\Component\Form\Form
+        arguments: [%nicob.scrum.project.form.name%, @nicob.scrum.project.form.type ]
+    
+    nicob.scrum.project.form.handler.default:
+      class: NicoB\ScrumBundle\Form\Handler\ProjectFormHandler
+      arguments: [@nicob.scrum.project.form, @request ]
+      scope: request

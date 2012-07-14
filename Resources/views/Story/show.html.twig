@@ -38,10 +38,7 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('story_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
+        <a class="btn btn-danger" href="{{ path('story_delete',{'id':entity.id}) }}">Delete</a>
     </li>
 </ul>
 {% endblock %}

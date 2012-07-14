@@ -1,0 +1,21 @@
+services:
+    nicob.scrum.story.manager.default:
+        class: NicoB\ScrumBundle\Manager\StoryManager
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.story.class%]
+        
+    nicob.scrum.story.form.type.default:
+      class: NicoB\ScrumBundle\Form\Type\StoryFormType
+      arguments: [%nicob.scrum.story.class%]
+      tags:
+          - { name: form.type }
+          
+    nicob.scrum.story.form:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: Symfony\Component\Form\Form
+        arguments: [%nicob.scrum.story.form.name%,@nicob.scrum.story.form.type ]
+    
+    nicob.scrum.story.form.handler.default:
+      class: NicoB\ScrumBundle\Form\Handler\StoryFormHandler
+      arguments: [@nicob.scrum.story.form, @request ]
+      scope: request

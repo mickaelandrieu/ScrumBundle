@@ -31,7 +31,10 @@ class NicoBScrumExtension extends Extension {
         $container->setParameter('nicob.scrum.project.form.name', $config['project']['form']['name']);
         $container->setParameter('nicob.scrum.story.form.name', $config['story']['form']['name']);
 
-        $loader->load('services.yml');
+        $loader->load('project.yml');
+        $loader->load('story.yml');
+        $loader->load('backlog.yml');
+        $loader->load('sandbox.yml');
         
         $container->setAlias('nicob.scrum.backlog.manager', $config['backlog']['manager']);
         $container->setAlias('nicob.scrum.project.manager', $config['project']['manager']);
@@ -40,11 +43,13 @@ class NicoBScrumExtension extends Extension {
 
 
         $container->setAlias('nicob.scrum.backlog.form.handler', $config['backlog']['form']['handler']);
+        $container->setAlias('nicob.scrum.backlog.form.type', $config['backlog']['form']['type']);
 
         $container->setAlias('nicob.scrum.project.form.handler', $config['project']['form']['handler']);
         $container->setAlias('nicob.scrum.project.form.type', $config['project']['form']['type']);
 
         $container->setAlias('nicob.scrum.story.form.handler', $config['story']['form']['handler']);
+        $container->setAlias('nicob.scrum.story.form.type', $config['story']['form']['type']);
 
 
 

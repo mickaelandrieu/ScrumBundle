@@ -1,0 +1,21 @@
+services:
+    nicob.scrum.backlog.manager.default: 
+        class: NicoB\ScrumBundle\Manager\BacklogManager
+        arguments: [@doctrine.orm.entity_manager,%nicob.scrum.backlog.class%]
+        
+    nicob.scrum.backlog.form.type.default:
+      class: NicoB\ScrumBundle\Form\Type\BacklogFormType
+      arguments: [%nicob.scrum.backlog.class%]
+      tags:
+          - { name: form.type }
+          
+    nicob.scrum.backlog.form:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: Symfony\Component\Form\Form
+        arguments: [%nicob.scrum.backlog.form.name%,@nicob.scrum.backlog.form.type ]
+    
+    nicob.scrum.backlog.form.handler.default:
+      class: NicoB\ScrumBundle\Form\Handler\BacklogFormHandler
+      arguments: [@nicob.scrum.backlog.form, @request ]
+      scope: request     
