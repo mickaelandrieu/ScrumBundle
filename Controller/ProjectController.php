@@ -54,9 +54,6 @@ class ProjectController extends Controller {
         $manager = $this->get('nicob.scrum.project.manager');
 
         if ($handler->process()) {
-            $project = $handler->getForm()->getData();
-            $manager->update($project);
-
             return $this->redirect($this->generateUrl('project'));
         }
 
@@ -77,9 +74,6 @@ class ProjectController extends Controller {
         $project = $manager->find($id, true);
 
         if ($handler->process($project)) {
-            $project = $handler->getForm()->getData();
-            $manager->update($project);
-
             return $this->redirect($this->generateUrl('project'));
         }
 
@@ -106,12 +100,20 @@ class ProjectController extends Controller {
 
     /**
      * Render form switcher in layout
+     * getMethod() not work in twig embeded controller, so we work directly on request
      * @Template()
      */
     public function switcherAction() {
-        $handler = $this->get('nicob.scrum.project.form.switcher.handler');
+        $form = $this->get('nicob.scrum.project.form.switcher');
+        if ($this->getRequest()->request->has('project_switcher_form')) {
+            $id = $this->getRequest()->request->get('project_switcher_form')['project'];
+            if (is_numeric($id))
+                $this->get('session')->set('project', $id);
+        }
+        
+
         return array(
-            'form' => $handler->getForm()->createView(),
+            'form' => $form->createView(),
         );
     }
 

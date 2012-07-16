@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;
 
 
-trait BaseFormHandler {
+abstract class BaseFormHandler {
 
     protected $request;
     protected $form;
@@ -26,6 +26,7 @@ trait BaseFormHandler {
     }
 
     public function process($entity = null) {
+        
         if ($entity)
             $this->form->setData($entity);
         if ('POST' == $this->request->getMethod()) {
@@ -38,6 +39,6 @@ trait BaseFormHandler {
         return false;
     }
 
-    function onSuccess() {
+    public function onSuccess() {
     }
 }

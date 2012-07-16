@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @author Nicolas Badey <nicolas.badey@gmail.com>
  */
 
-trait BaseManager {
+abstract class BaseManager {
 
     
     protected $em;
@@ -55,9 +55,13 @@ trait BaseManager {
         }
     }
     
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria,$exception = false)
     {
-        return $this->repository->findOneBy($criteria);
+        $entity = $this->repository->findOneBy($criteria);
+        if ($exception && !$entity) {
+            throw new NotFoundHttpException('Unable to find entity.');
+        }
+        return $entity;
     }
     
     public function findBy(array $criteria)
@@ -69,7 +73,7 @@ trait BaseManager {
     {
         $entity = $this->repository->find($id);
         if ($exception && !$entity) {
-            throw new NotFoundHttpException('Unable to find Project entity.');
+            throw new NotFoundHttpException('Unable to find entity.');
         }
         return $entity;
     }

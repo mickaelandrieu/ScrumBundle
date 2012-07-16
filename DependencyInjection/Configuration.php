@@ -57,7 +57,6 @@ class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('type')->defaultValue('nicob.scrum.project.form.switcher.type.default')->cannotBeEmpty()->end()
-                                        ->scalarNode('handler')->defaultValue('nicob.scrum.project.form.switcher.handler.default')->cannotBeEmpty()->end()
                                         ->scalarNode('name')->defaultValue('project_switcher_form')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

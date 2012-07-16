@@ -2,17 +2,24 @@
 
 namespace NicoB\ScrumBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProjectSwitcherFormType extends AbstractType {
+class ProjectSwitcherFormType extends BaseFormType {
 
-    use BaseFormType;
+    public function __construct() {
+        
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+        ));
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('project','entity',['class'=>'NicoB\ScrumBundle\Entity\Project'])
+                ->add('project', 'entity', ['class' => 'NicoB\ScrumBundle\Entity\Project'])
         ;
     }
+
 }

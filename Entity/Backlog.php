@@ -69,7 +69,7 @@ class Backlog {
     protected $finishAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Story", mappedBy="backlog")
+     * @ORM\OneToMany(targetEntity="Story", mappedBy="backlog",cascade={"remove"})
      * 
      */
     private $stories;

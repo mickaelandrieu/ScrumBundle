@@ -17,7 +17,7 @@ services:
     
     nicob.scrum.project.form.crud.handler.default:
       class: NicoB\ScrumBundle\Form\Handler\ProjectFormHandler
-      arguments: [@nicob.scrum.project.form.crud, @request ]
+      arguments: [@nicob.scrum.project.form.crud, @request,@security.context,@nicob.scrum.project.manager,@nicob.scrum.sandbox.manager ]
       scope: request
       
       
@@ -32,8 +32,4 @@ services:
         factory_service: form.factory
         class: Symfony\Component\Form\Form
         arguments: [%nicob.scrum.project.form.switcher.name%, @nicob.scrum.project.form.switcher.type ]
-        
-    nicob.scrum.project.form.switcher.handler.default:
-      class: NicoB\ScrumBundle\Form\Handler\ProjectSwitcherFormHandler
-      arguments: [@nicob.scrum.project.form.switcher, @request ]
-      scope: request
+       

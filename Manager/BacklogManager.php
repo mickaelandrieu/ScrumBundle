@@ -13,9 +13,8 @@ namespace NicoB\ScrumBundle\Manager;
  * @author Nicolas Badey <nicolas.badey@gmail.com>
  */
 
-class BacklogManager {
+class BacklogManager extends BaseManager {
     
-    use BaseManager;
-    
+   
 
 }

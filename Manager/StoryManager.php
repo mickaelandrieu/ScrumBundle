@@ -13,9 +13,7 @@ namespace NicoB\ScrumBundle\Manager;
  * @author Nicolas Badey <nicolas.badey@gmail.com>
  */
 
-class StoryManager {
-    
-    use BaseManager;
-    
+class StoryManager extends BaseManager {
+
 
 }

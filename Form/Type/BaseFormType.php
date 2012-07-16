@@ -3,8 +3,9 @@
 namespace NicoB\ScrumBundle\Form\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\AbstractType;
 
-trait BaseFormType {
+abstract class BaseFormType extends AbstractType {
 
     private $class;
 

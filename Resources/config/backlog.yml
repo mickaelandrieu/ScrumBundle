@@ -17,5 +17,5 @@ services:
     
     nicob.scrum.backlog.form.handler.default:
       class: NicoB\ScrumBundle\Form\Handler\BacklogFormHandler
-      arguments: [@nicob.scrum.backlog.form, @request ]
+      arguments: [@nicob.scrum.backlog.form, @request,@session,@nicob.scrum.project.manager,@nicob.scrum.backlog.manager ]
       scope: request     

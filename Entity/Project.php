@@ -62,7 +62,7 @@ class Project {
     protected $createdAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Sandbox", mappedBy="project",cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Sandbox", mappedBy="project",cascade={"remove","persist"})
      **/
     protected $sandbox;
     

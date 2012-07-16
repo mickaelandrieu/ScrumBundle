@@ -17,5 +17,5 @@ services:
     
     nicob.scrum.story.form.handler.default:
       class: NicoB\ScrumBundle\Form\Handler\StoryFormHandler
-      arguments: [@nicob.scrum.story.form, @request ]
+      arguments: [@nicob.scrum.story.form, @request,@session,@security.context,@nicob.scrum.story.manager,@nicob.scrum.sandbox.manager ]
       scope: request
