@@ -24,7 +24,9 @@ class ProjectFormHandler extends BaseFormHandler {
     public function onSuccess() {
         $project = $this->form->getData();
         $project->setCreatedBy($this->securityContext->getToken()->getUser());
-        $project->setSandbox($this->sandboxManager->create());
+        $sandbox = $this->sandboxManager->create();
+        $sandbox->setProject($project);
+        $project->setSandbox($sandbox);
         $this->manager->update($project);
     }
 

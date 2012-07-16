@@ -36,7 +36,7 @@ class Sandbox {
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Project", inversedBy="project")
+     * @ORM\OneToOne(targetEntity="Project", inversedBy="sandbox")
      * */
     private $project;
 
