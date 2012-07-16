@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-
 /**
  * Project controller.
  *
@@ -37,8 +36,8 @@ class ProjectController extends Controller {
      */
     public function showAction($id) {
         $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id,true);
-        
+        $project = $manager->find($id, true);
+
         return array(
             'entity' => $project
         );
@@ -51,7 +50,7 @@ class ProjectController extends Controller {
      * @Template("NicoBScrumBundle:Project:new.html.twig")
      */
     public function newAction() {
-        $handler = $this->get('nicob.scrum.project.form.handler');
+        $handler = $this->get('nicob.scrum.project.form.crud.handler');
         $manager = $this->get('nicob.scrum.project.manager');
 
         if ($handler->process()) {
@@ -73,9 +72,9 @@ class ProjectController extends Controller {
      * @Template()
      */
     public function editAction($id) {
-        $handler = $this->get('nicob.scrum.project.form.handler');
+        $handler = $this->get('nicob.scrum.project.form.crud.handler');
         $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id,true);
+        $project = $manager->find($id, true);
 
         if ($handler->process($project)) {
             $project = $handler->getForm()->getData();
@@ -98,11 +97,22 @@ class ProjectController extends Controller {
      */
     public function deleteAction($id) {
         $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id,true);
+        $project = $manager->find($id, true);
 
         $manager->delete($project);
 
         return $this->redirect($this->generateUrl('project'));
+    }
+
+    /**
+     * Render form switcher in layout
+     * @Template()
+     */
+    public function switcherAction() {
+        $handler = $this->get('nicob.scrum.project.form.switcher.handler');
+        return array(
+            'form' => $handler->getForm()->createView(),
+        );
     }
 
 }

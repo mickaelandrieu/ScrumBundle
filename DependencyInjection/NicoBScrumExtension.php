@@ -28,7 +28,8 @@ class NicoBScrumExtension extends Extension {
         $container->setParameter('nicob.scrum.story.class', $config['story']['class']);
         
         $container->setParameter('nicob.scrum.backlog.form.name', $config['backlog']['form']['name']);
-        $container->setParameter('nicob.scrum.project.form.name', $config['project']['form']['name']);
+        $container->setParameter('nicob.scrum.project.form.crud.name', $config['project']['form']['crud']['name']);
+        $container->setParameter('nicob.scrum.project.form.switcher.name', $config['project']['form']['crud']['name']);
         $container->setParameter('nicob.scrum.story.form.name', $config['story']['form']['name']);
 
         $loader->load('project.yml');
@@ -45,8 +46,10 @@ class NicoBScrumExtension extends Extension {
         $container->setAlias('nicob.scrum.backlog.form.handler', $config['backlog']['form']['handler']);
         $container->setAlias('nicob.scrum.backlog.form.type', $config['backlog']['form']['type']);
 
-        $container->setAlias('nicob.scrum.project.form.handler', $config['project']['form']['handler']);
-        $container->setAlias('nicob.scrum.project.form.type', $config['project']['form']['type']);
+        $container->setAlias('nicob.scrum.project.form.crud.handler', $config['project']['form']['crud']['handler']);
+        $container->setAlias('nicob.scrum.project.form.crud.type', $config['project']['form']['crud']['type']);
+        $container->setAlias('nicob.scrum.project.form.switcher.handler', $config['project']['form']['switcher']['handler']);
+        $container->setAlias('nicob.scrum.project.form.switcher.type', $config['project']['form']['switcher']['type']);
 
         $container->setAlias('nicob.scrum.story.form.handler', $config['story']['form']['handler']);
         $container->setAlias('nicob.scrum.story.form.type', $config['story']['form']['type']);

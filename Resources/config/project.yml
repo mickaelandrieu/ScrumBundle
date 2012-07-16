@@ -3,19 +3,37 @@ services:
         class: NicoB\ScrumBundle\Manager\ProjectManager
         arguments: [@doctrine.orm.entity_manager,%nicob.scrum.project.class%]  
         
-    nicob.scrum.project.form.type.default:
+    nicob.scrum.project.form.crud.type.default:
       class: NicoB\ScrumBundle\Form\Type\ProjectFormType
       arguments: [%nicob.scrum.project.class%]
       tags:
           - { name: form.type }
           
-    nicob.scrum.project.form:
+    nicob.scrum.project.form.crud:
         factory_method: createNamed
         factory_service: form.factory
         class: Symfony\Component\Form\Form
-        arguments: [%nicob.scrum.project.form.name%, @nicob.scrum.project.form.type ]
+        arguments: [%nicob.scrum.project.form.crud.name%, @nicob.scrum.project.form.crud.type ]
     
-    nicob.scrum.project.form.handler.default:
+    nicob.scrum.project.form.crud.handler.default:
       class: NicoB\ScrumBundle\Form\Handler\ProjectFormHandler
-      arguments: [@nicob.scrum.project.form, @request ]
+      arguments: [@nicob.scrum.project.form.crud, @request ]
+      scope: request
+      
+      
+
+    nicob.scrum.project.form.switcher.type.default:
+      class: NicoB\ScrumBundle\Form\Type\ProjectSwitcherFormType
+      arguments: [%nicob.scrum.project.class%]
+      tags:
+          - { name: form.type } 
+    nicob.scrum.project.form.switcher:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: Symfony\Component\Form\Form
+        arguments: [%nicob.scrum.project.form.switcher.name%, @nicob.scrum.project.form.switcher.type ]
+        
+    nicob.scrum.project.form.switcher.handler.default:
+      class: NicoB\ScrumBundle\Form\Handler\ProjectSwitcherFormHandler
+      arguments: [@nicob.scrum.project.form.switcher, @request ]
       scope: request
