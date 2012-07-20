@@ -2,23 +2,42 @@
 
 
 {% block content %}
-
-{% for backlog in backlogs %}
 <div class="row-fluid">
-    <div class="span6">
+    <div class="span4">
         STATS
     </div>
-    <div class="span6">
-        <h3>{{ backlog.name }}</h3>
+    <div class="span4">
+
+
+
+        <h3>Backlog</h3>
+
+        {% for backlog in project.backlogs %}
+
+
+        <h4>{{ backlog.name }}</h4>
         {% for story in backlog.stories %}
-            <div>{{ story.name }}</div>
-            <div>{{ story.difficulty.name }}</div>
-            <div>{{ story.priority.name }}</div>
-            <div>{{ story.status.name }}</div>
-            <div>{{ story.type.name }}</div>
+
+        <div>
+            {% include 'NicoBScrumBundle:Dashboard:blocs:story.html.twig' %}
+        </div>
+        {% endfor %}
+
         {% endfor %}
     </div>
-</div>
-{% endfor %}
+    <div class="span4">
+        <h3>SandBox</h3>
 
+        {% for story in project.sandbox.stories %}
+
+        <div>{% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}</div>
+
+
+        {% endfor %}
+
+
+
+
+    </div>
+</div>
 {% endblock %}

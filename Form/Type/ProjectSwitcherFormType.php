@@ -18,7 +18,10 @@ class ProjectSwitcherFormType extends BaseFormType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('project', 'entity', ['class' => 'NicoB\ScrumBundle\Entity\Project'])
+                ->add('project', 'entity', [
+                    'class' => 'NicoB\ScrumBundle\Entity\Project',
+                    'required' => false
+                    ])
         ;
     }
 

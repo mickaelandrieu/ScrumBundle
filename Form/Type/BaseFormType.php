@@ -20,7 +20,7 @@ abstract class BaseFormType extends AbstractType {
     }
 
     public function getName() {
-        return 'will_be_overiden_by_form_factory';
+        return 'will_be_overriden_by_form_factory';
     }
 
 }

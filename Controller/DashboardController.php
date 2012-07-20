@@ -15,9 +15,9 @@ class DashboardController extends Controller {
      */
     public function indexAction() {
         $id = $this->get('session')->get('project');
-        $backlogs = $this->get('nicob.scrum.backlog.manager')->findBy(['project'=>$id]);
+        $project = $this->get('nicob.scrum.project.manager')->find($id);
         
-        return array('backlogs' => $backlogs);
+        return array('project' => $project);
     }
 
 

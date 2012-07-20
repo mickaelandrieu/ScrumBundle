@@ -1,6 +1,6 @@
-<form action="#" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button class="btn btn-primary" type="submit">Change</button>
-    </p>
+<form class="navbar-search pull-right" action="#" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form.project) }}
+    
+        <button class="btn btn-primary" type="submit">Changer de projet</button>
+    
 </form>

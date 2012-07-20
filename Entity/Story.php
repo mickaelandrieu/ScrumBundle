@@ -67,22 +67,22 @@ class Story {
     private $backlog;
 
     /**
-     * @ORM\OneToOne(targetEntity="Status")
+     * @ORM\ManyToOne(targetEntity="Status")
      * */
     private $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="Type")
+     * @ORM\ManyToOne(targetEntity="Type")
      * */
     private $type;
 
     /**
-     * @ORM\OneToOne(targetEntity="Priority")
+     * @ORM\ManyToOne(targetEntity="Priority")
      * */
     private $priority;
 
     /**
-     * @ORM\OneToOne(targetEntity="Difficulty")
+     * @ORM\ManyToOne(targetEntity="Difficulty")
      * */
     private $difficulty;
     

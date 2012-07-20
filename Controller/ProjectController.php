@@ -51,8 +51,7 @@ class ProjectController extends Controller {
      */
     public function newAction() {
         $handler = $this->get('nicob.scrum.project.form.crud.handler');
-        $manager = $this->get('nicob.scrum.project.manager');
-
+        
         if ($handler->process()) {
             return $this->redirect($this->generateUrl('project'));
         }
