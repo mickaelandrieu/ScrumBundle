@@ -1,6 +1,10 @@
+{% set story = story[0] %}
 <div class="story ">
     <a class="floatL" href="{{ path('story_show',{'id':story.id }) }}">{{ story.name }}</a>
     <div class="floatR" >
+    
+    {% include 'NicoBScrumBundle:Dashboard:status.html.twig' %}    
+        
     {{ story.priority.name }}/{{ story.difficulty.name }}
 
     </div>

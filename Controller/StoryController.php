@@ -28,6 +28,25 @@ class StoryController extends Controller {
             'entities' => $entities,
         );
     }
+    
+    /**
+     * change story's status 
+     *
+     * @Route("/{id}/status/{id_status}", name="story_status")
+     */
+    public function statusAction($id, $id_status) {
+        $manager = $this->get('nicob.scrum.story.manager');
+        $story = $manager->find($id);
+        
+        //TODO : Create Status Manager
+        $em = $this->getDoctrine()->getEntityManager();
+        $status = $em->getRepository('NicoBScrumBundle:Status')->find($id_status);
+        
+        $story->setStatus($status);
+        $manager->update($story);
+        
+        return $this->redirect($this->generateUrl('home'));
+    }
 
     /**
      * Finds and displays a Project entity.

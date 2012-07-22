@@ -15,11 +15,17 @@ class DashboardController extends Controller {
      */
     public function indexAction() {
         $backlogManager=$this->get('nicob.scrum.backlog.manager');
+        $storyManager=$this->get('nicob.scrum.story.manager');
         $id = $this->get('session')->get('project');
+
         $project = $this->get('nicob.scrum.project.manager')->find($id);
+        $currentBacklog = $backlogManager->getCurrent($project);
+        $sandbox = $project->getSandbox();
         
         return array(
             'project' => $project,
+            'backlogStories' => $storyManager->getOrderedStoriesByBacklog($currentBacklog),
+            'sandboxStories' => $storyManager->getOrderedStoriesBySandbox($sandbox),
             'backlog' => $backlogManager->getCurrent($project)
             );
     }

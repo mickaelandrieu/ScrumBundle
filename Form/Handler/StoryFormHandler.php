@@ -35,7 +35,9 @@ class StoryFormHandler extends BaseFormHandler {
             ],true);
             $story->setSandbox($sandbox);
             
+            
         }
+        $story->setSandbox(null);
         $this->manager->update($story);
     }
 

@@ -150,16 +150,6 @@ class Project {
     }
 
     /**
-     * Get backlog
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getBacklog()
-    {
-        return $this->backlog;
-    }
-
-    /**
      * Get backlogs
      *
      * @return Doctrine\Common\Collections\Collection 

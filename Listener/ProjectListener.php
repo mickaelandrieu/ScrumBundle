@@ -39,11 +39,13 @@ class ProjectListener  {
         if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
             return;
         }
-        /*
-        if (!$this->session->has('project') && $event->getRequest()->attributes->get('_route') != 'project_switcher'){
+        $route = $event->getRequest()->attributes->get('_route');
+        
+        
+        if (!$this->session->has('project') &&  $route != 'project_switcher' && strpos($route, 'fos') !== 0){
             $redirectResponse = new RedirectResponse($this->router->generate('project_switcher'));
             $event->setResponse($redirectResponse);
-        }*/
+        }
     }
 
 }

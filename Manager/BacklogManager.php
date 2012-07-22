@@ -25,5 +25,5 @@ class BacklogManager extends BaseManager {
        
        return $query->getOneOrNullResult();
    }
-
+   
 }

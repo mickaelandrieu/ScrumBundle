@@ -11,13 +11,10 @@
         <div class="panel">
         <div class="panel_header">Current backlog : {{ backlog.name }}</div>
         <div class="panel_list">
-        
-
-          
-            {% for story in backlog.stories %}
-
-                    {% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}
-                
+       
+            {% for story in backlogStories %}
+            
+                {% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}
             {% endfor %}
 
         </div>
@@ -28,7 +25,7 @@
         <div class="panel_header">SandBox</div>
         <div class="panel_list">
 
-        {% for story in project.sandbox.stories %}
+        {% for story in sandboxStories %}
             {% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}
         {% endfor %}
             
