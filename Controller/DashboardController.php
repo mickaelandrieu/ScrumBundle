@@ -14,10 +14,14 @@ class DashboardController extends Controller {
      * @Template()
      */
     public function indexAction() {
+        $backlogManager=$this->get('nicob.scrum.backlog.manager');
         $id = $this->get('session')->get('project');
         $project = $this->get('nicob.scrum.project.manager')->find($id);
         
-        return array('project' => $project);
+        return array(
+            'project' => $project,
+            'backlog' => $backlogManager->getCurrent($project)
+            );
     }
 
 

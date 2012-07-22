@@ -15,6 +15,15 @@ namespace NicoB\ScrumBundle\Manager;
 
 class BacklogManager extends BaseManager {
     
-   
+   public function getCurrent($project){
+       $qb=$this->em->createQueryBuilder();
+       $qb->select('b')
+            ->from($this->class, 'b')
+            ->where('b = ?1');
+       $query = $qb->getQuery();
+       $query->setParameter(1,$project);
+       
+       return $query->getOneOrNullResult();
+   }
 
 }

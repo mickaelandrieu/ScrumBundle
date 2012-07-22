@@ -1,8 +1,9 @@
-
-<h5 class="floatL">{{ story.name }}</h5>
-<div class="floatR" >
+<div class="story ">
+    <a class="floatL" href="{{ path('story_show',{'id':story.id }) }}">{{ story.name }}</a>
+    <div class="floatR" >
     {{ story.priority.name }}/{{ story.difficulty.name }}
 
-</div>
+    </div>
+    <div class="clear"></div>
 
-<div class="clear">{{ story.description }}</div>
+</div>

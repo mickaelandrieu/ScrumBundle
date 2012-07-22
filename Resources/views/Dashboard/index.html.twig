@@ -4,38 +4,36 @@
 {% block content %}
 <div class="row-fluid">
     <div class="span4">
-        STATS
+        <div class="panel_header">STATS</div>
     </div>
     <div class="span4">
+        
+        <div class="panel">
+        <div class="panel_header">Current backlog : {{ backlog.name }}</div>
+        <div class="panel_list">
+        
 
+          
+            {% for story in backlog.stories %}
 
+                    {% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}
+                
+            {% endfor %}
 
-        <h3>Backlog</h3>
-
-        {% for backlog in project.backlogs %}
-
-
-        <h4>{{ backlog.name }}</h4>
-        {% for story in backlog.stories %}
-
-        <div>
-            {% include 'NicoBScrumBundle:Dashboard:blocs:story.html.twig' %}
         </div>
-        {% endfor %}
-
-        {% endfor %}
+        </div>
     </div>
     <div class="span4">
-        <h3>SandBox</h3>
+        <div class="panel">
+        <div class="panel_header">SandBox</div>
+        <div class="panel_list">
 
         {% for story in project.sandbox.stories %}
-
-        <div>{% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}</div>
-
-
+            {% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}
         {% endfor %}
-
-
+            
+        </div>
+        </div>
 
 
     </div>

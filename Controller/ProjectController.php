@@ -115,5 +115,19 @@ class ProjectController extends Controller {
             'form' => $form->createView(),
         );
     }
+    /**
+     * Render form switcher in layout
+     * getMethod() not work in twig embeded controller, so we work directly on request
+     * @Route("/switcher", name="project_switcher")
+     * @Template()
+     */
+    public function switcherPageAction() {
+      
+        if ($this->get('session')->has('project'))
+        {
+            return $this->redirect($this->generateUrl('home'));
+        }
+        return array();
+    }
 
 }

@@ -33,3 +33,8 @@ services:
         class: Symfony\Component\Form\Form
         arguments: [%nicob.scrum.project.form.switcher.name%, @nicob.scrum.project.form.switcher.type ]
        
+    nicob.scrum.project.listener.default:
+      class: NicoB\ScrumBundle\Listener\ProjectListener
+      arguments: [ @session, @router ]
+      tags:
+          - { name: kernel.event_listener, event: kernel.response , method: onKernelResponse }
