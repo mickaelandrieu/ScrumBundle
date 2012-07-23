@@ -1,0 +1,32 @@
+{
+    "name": "nico-b/scrum-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony NicoBScrumBundle",
+    "keywords": ["Scrum"],
+    "homepage": "https://github.com/Nico-B/ScrumBundle",
+    "license": "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License",
+    "authors": [
+        {
+            "name": "Nicolas Badey",
+            "email": "nicolas.badey@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+        "symfony/framework-bundle": "2.1.*",
+        "symfony/security-bundle": "2.1.*"
+    },
+    "require-dev": {
+        "twig/twig": "*",
+        "doctrine/doctrine-bundle": "*",
+        "friendsofsymfony/user-bundle": "*",
+        "swiftmailer/swiftmailer": "*",
+        "symfony/yaml": "2.1.*",
+        "symfony/validator": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "NicoB\\ScrumBundle": "" }
+    },
+    "target-dir": "NicoB/ScrumBundle"
+}

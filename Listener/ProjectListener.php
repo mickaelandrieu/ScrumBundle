@@ -42,7 +42,11 @@ class ProjectListener  {
         $route = $event->getRequest()->attributes->get('_route');
         
         
-        if (!$this->session->has('project') &&  $route != 'project_switcher' && strpos($route, 'fos') !== 0){
+        if (!$this->session->has('project') 
+                && ( strpos($route, 'story') === 0 
+                || strpos($route, 'backlog') === 0 )
+           )
+        {
             $redirectResponse = new RedirectResponse($this->router->generate('project_switcher'));
             $event->setResponse($redirectResponse);
         }
