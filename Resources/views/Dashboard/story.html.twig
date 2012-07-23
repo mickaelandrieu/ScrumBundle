@@ -1,13 +1,24 @@
+{% set priority = story.priority %}
 {% set story = story[0] %}
-<div class="story ">
-    <a class="floatL" href="{{ path('story_show',{'id':story.id }) }}">{{ story.name }}</a>
-    <div class="floatR" >
+<div class="story bgStatus{{ story.status.id }}">
+    <div class="floatL" >
+    <a href="{{ path('story_show',{'id':story.id }) }}">{{ story.name }}</a>
     
-    {% include 'NicoBScrumBundle:Dashboard:status.html.twig' %}    
-        
-    {{ story.priority.name }}/{{ story.difficulty.name }}
+    {% if story.assignedAt %}
+            ({{ story.assignedAt.username }})
+        {% endif %}
+    </div>
+    <div class="floatR" >
+    {% if status is defined %}
+        {% include 'NicoBScrumBundle:Dashboard:status.html.twig' %}    
+    {% endif %}
+    
+    {{ priority | number_format(1) }}
 
     </div>
-    <div class="clear"></div>
+    <div class="clear">
+        
+        
+    </div>
 
 </div>

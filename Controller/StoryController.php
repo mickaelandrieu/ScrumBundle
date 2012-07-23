@@ -37,6 +37,10 @@ class StoryController extends Controller {
     public function statusAction($id, $id_status) {
         $manager = $this->get('nicob.scrum.story.manager');
         $story = $manager->find($id);
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        if ($id_status == 2)
+            $story->setAssignedAt($user);
         
         //TODO : Create Status Manager
         $em = $this->getDoctrine()->getEntityManager();

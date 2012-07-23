@@ -1,9 +1,12 @@
 {% if story.status.id == 1 %}
-  <a href="{{ path('story_status',{'id':story.id,'id_status':5}) }}">Accept</a> <a href="{{ path('story_status',{'id':story.id,'id_status':6}) }}">Reject</a>
-{% elseif story.status.id == 5 %}
-  <a href="{{ path('story_status',{'id':story.id,'id_status':4}) }}">Deliver</a>
-{% elseif story.status.id == 4 %}
+  <a href="{{ path('story_status',{'id':story.id,'id_status':2}) }}">Start</a>
+{% elseif story.status.id == 2 %}
   <a href="{{ path('story_status',{'id':story.id,'id_status':3}) }}">Finish</a>
 {% elseif story.status.id == 3 %}
-  Closed
+  <a href="{{ path('story_status',{'id':story.id,'id_status':5}) }}">Accept</a>
+  <a href="{{ path('story_status',{'id':story.id,'id_status':6}) }}">Reject</a>
+{% elseif story.status.id == 5 %}
+  Closed <a href="{{ path('story_status',{'id':story.id,'id_status':1}) }}">Re-Open</a>
+{% elseif story.status.id == 6  %}
+  <a href="{{ path('story_status',{'id':story.id,'id_status':2}) }}">Re-Start</a>
 {% endif %}
