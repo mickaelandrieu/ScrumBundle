@@ -17,10 +17,10 @@ class StoryManager extends BaseManager {
 
     public function getOrderedStoriesByBacklog($backlog) {
         $qb = $this->em->createQueryBuilder();
-        $qb->select(['s','s.priority/s.difficulty AS realPriority'])
+        $qb->select(['s','s.priority/s.difficulty AS priority'])
                 ->from($this->class, 's')
                 ->where('s.backlog = ?1')
-                ->orderBy('realPriority','ASC');
+                ->orderBy('priority','ASC');
         $query = $qb->getQuery();
         $query->setParameter(1, $backlog);
 
@@ -28,10 +28,10 @@ class StoryManager extends BaseManager {
     }
     public function getOrderedStoriesBySandbox($sandbox) {
         $qb = $this->em->createQueryBuilder();
-        $qb->select(['s','s.priority/s.difficulty AS realPriority'])
+        $qb->select(['s','s.priority/s.difficulty AS priority'])
                 ->from($this->class, 's')
                 ->where('s.sandbox = ?1')
-                ->orderBy('realPriority','ASC');
+                ->orderBy('priority','ASC');
         $query = $qb->getQuery();
         $query->setParameter(1, $sandbox);
 

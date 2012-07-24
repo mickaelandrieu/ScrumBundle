@@ -6,6 +6,7 @@
     <div class="span4">
         <div class="panel_header">STATS</div>
     </div>
+    {% if backlog %}
     <div class="span4">
         
         <div class="panel">
@@ -14,12 +15,13 @@
        
             {% for story in backlogStories %}
             
-                {% include 'NicoBScrumBundle:Dashboard:story.html.twig' %}
+                {% include 'NicoBScrumBundle:Dashboard:story.html.twig' with {'status':true} %}
             {% endfor %}
 
         </div>
         </div>
     </div>
+    {% endif %}
     <div class="span4">
         <div class="panel">
         <div class="panel_header">SandBox</div>

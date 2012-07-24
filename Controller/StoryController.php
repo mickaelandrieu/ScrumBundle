@@ -43,8 +43,14 @@ class StoryController extends Controller {
      *
      * @Route("/project/{id_project}/story/{id}/status/{id_status}", name="scrum_story_status")
      */
+
     public function statusAction($id_project,$id, $id_status) {
         $story = $this->getManager()->find($id);
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        if ($id_status == 2)
+            $story->setAssignedAt($user);
+
         
         //TODO : Create Status Manager
         $em = $this->getDoctrine()->getEntityManager();
