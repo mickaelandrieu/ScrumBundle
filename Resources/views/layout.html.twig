@@ -22,18 +22,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="brand" href="{{ path('home') }}">Scrum Dashboard</a>
+                    <a class="brand" href="{{ path('scrum_dashboard',{'id_project':id_project}) }}">Scrum Dashboard</a>
                     <div class="nav-collapse collapse">
 
                         <ul class="nav">
-                            <li class="{% if app.request.attributes.get('_route') == 'project' %}active{% endif %}">
-                                <a href="{{ path('project') }}">Project</a>
+                            <li class="{% if app.request.attributes.get('_route') == 'scrum_project' %}active{% endif %}">
+                                <a href="{{ path('scrum_project',{'id_project':id_project}) }}">Project</a>
                             </li>
-                            <li class="{% if app.request.attributes.get('_route') == 'backlog' %}active{% endif %}">
-                                <a href="{{ path('backlog') }}">Backlog</a>
+                            <li class="{% if app.request.attributes.get('_route') == 'scrum_backlog' %}active{% endif %}">
+                                <a href="{{ path('scrum_backlog',{'id_project':id_project}) }}">Backlog</a>
                             </li>
-                            <li class="{% if app.request.attributes.get('_route') == 'story' %}active{% endif %}">
-                                <a href="{{ path('story') }}">Story</a>
+                            <li class="{% if app.request.attributes.get('_route') == 'scrum_story' %}active{% endif %}">
+                                <a href="{{ path('scrum_story',{'id_project':id_project}) }}">Story</a>
                             </li>
                             <li class="{% if app.request.attributes.get('_route') == 'fos_user_profile_edit' %}active{% endif %}">
                                 <a href="{{ path('fos_user_profile_edit') }}">User</a>
@@ -43,7 +43,7 @@
                             </li>
                             
                         </ul>
-                        {% render 'NicoBScrumBundle:Project:Switcher' %}
+                        {# render 'NicoBScrumBundle:Project:Switcher' #}
                     </div>
                     
                 </div>

@@ -10,91 +10,96 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Project controller.
  *
- * @Route("/project")
  */
 class ProjectController extends Controller {
+
+    public function getManager() {
+
+        return $this->get('nicob.scrum.project.manager');
+    }
+
+    public function getHandler() {
+
+        return $this->get('nicob.scrum.project.form.crud.handler');
+    }
 
     /**
      * Lists all Project entities.
      *
-     * @Route("/", name="project")
+     * @Route("/project/{id_project}/project", name="scrum_project")
      * @Template()
      */
-    public function indexAction() {
-        $manager = $this->get('nicob.scrum.project.manager');
-        $entities = $manager->findAll();
-        return array(
+    public function indexAction($id_project) {
+        $entities = $this->getManager()->findAll();
+        return [
             'entities' => $entities,
-        );
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Finds and displays a Project entity.
      *
-     * @Route("/{id}/show", name="project_show")
+     * @Route("/project/{id_project}/project/{id}/show", name="scrum_project_show")
      * @Template()
      */
-    public function showAction($id) {
-        $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id, true);
-
-        return array(
-            'entity' => $project
-        );
+    public function showAction($id_project, $id) {
+        return [
+            'entity' => $this->getManager()->find($id, true),
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Creates a new Project entity.
      *
-     * @Route("/create", name="project_new")
+     * @Route("/project/{id_project}/project/create", name="scrum_project_new")
      * @Template("NicoBScrumBundle:Project:new.html.twig")
      */
-    public function newAction() {
-        $handler = $this->get('nicob.scrum.project.form.crud.handler');
-        
-        if ($handler->process()) {
+    public function newAction($id_project) {
+        if ($this->getHandler()->process()) {
             return $this->redirect($this->generateUrl('project'));
         }
 
-        return array(
-            'form' => $handler->getForm()->createView(),
-        );
+        return [
+            'form' => $this->getHandler()->getForm()->createView(),
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Displays a form to edit an existing Project entity.
      *
-     * @Route("/{id}/edit", name="project_edit")
+     * @Route("/project/{id_project}/project/{id}/edit", name="scrum_project_edit")
      * @Template()
      */
-    public function editAction($id) {
-        $handler = $this->get('nicob.scrum.project.form.crud.handler');
-        $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id, true);
+    public function editAction($id_project, $id) {
+        $project = $this->getManager()->find($id, true);
 
-        if ($handler->process($project)) {
+        if ($this->getHandler()->process($project)) {
             return $this->redirect($this->generateUrl('project'));
         }
 
-        return array(
+        return [
             'entity' => $project,
-            'form' => $handler->getForm()->createView(),
-        );
+            'form' => $this->getHandler()->getForm()->createView(),
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Deletes a Project entity.
      *
-     * @Route("/{id}/delete", name="project_delete")
+     * @Route("/project/{id_project}/project/{id}/delete", name="scrum_project_delete")
      * @Method("get")
      */
-    public function deleteAction($id) {
-        $manager = $this->get('nicob.scrum.project.manager');
-        $project = $manager->find($id, true);
+    public function deleteAction($id_project, $id) {
+        $project = $this->getManager()->find($id, true);
+        $this->getManager()->delete($project);
 
-        $manager->delete($project);
-
-        return $this->redirect($this->generateUrl('project'));
+        return $this->redirect($this->generateUrl('scrum_project', [
+                            'id_project' => $id_project
+                        ]));
     }
 
     /**
@@ -106,28 +111,42 @@ class ProjectController extends Controller {
         $form = $this->get('nicob.scrum.project.form.switcher');
         if ($this->getRequest()->request->has('project_switcher_form')) {
             $id = $this->getRequest()->request->get('project_switcher_form')['project'];
-            if (is_numeric($id))
-                $this->get('session')->set('project', $id);
-        }
-        
+            if (is_numeric($id)) {
 
-        return array(
+                return $this->redirect('scrum_dashboard', [
+                            'id_project' => $id
+                        ]);
+            }
+        }
+
+
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
+
     /**
      * Render form switcher in layout
-     * getMethod() not work in twig embeded controller, so we work directly on request
-     * @Route("/switcher", name="project_switcher")
+     * For the moment use the embeded sitcherAction
+     * @Route("/switcher", name="scrum_project_switcher")
      * @Template()
      */
     public function switcherPageAction() {
-      
-        if ($this->get('session')->has('project'))
-        {
-            return $this->redirect($this->generateUrl('home'));
+        $form = $this->get('nicob.scrum.project.form.switcher');
+        if ($this->getRequest()->request->has('project_switcher_form')) {
+            $id = $this->getRequest()->request->get('project_switcher_form')['project'];
+            if (is_numeric($id)) {
+
+                return $this->redirect($this->generateUrl('scrum_dashboard', [
+                            'id_project' => $id
+                        ]));
+            }
         }
-        return array();
+
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
 }

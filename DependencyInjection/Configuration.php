@@ -36,7 +36,6 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('manager')->defaultValue('nicob.scrum.project.manager.default')->cannotBeEmpty()->end()
-                        ->scalarNode('listener')->defaultValue('nicob.scrum.project.listener.default')->cannotBeEmpty()->end()
                         ->scalarNode('class')->defaultValue('NicoB\ScrumBundle\Entity\Project')->cannotBeEmpty()->end()
                         ->arrayNode('form')
                             ->addDefaultsIfNotSet()

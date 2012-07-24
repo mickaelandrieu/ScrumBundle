@@ -1,6 +1,6 @@
-{% extends 'NicoBScrumBundle::layout.html.twig' %}
-
-
-{% block content %}
-    {% render 'NicoBScrumBundle:Project:Switcher' %}
-{% endblock %}
+<form class="navbar-search pull-right" action="#" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form.project) }}
+    
+        <button class="btn btn-primary" type="submit">Changer de projet</button>
+    
+</form>

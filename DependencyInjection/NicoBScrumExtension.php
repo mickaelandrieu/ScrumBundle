@@ -39,7 +39,6 @@ class NicoBScrumExtension extends Extension {
         
         $container->setAlias('nicob.scrum.backlog.manager', $config['backlog']['manager']);
         $container->setAlias('nicob.scrum.project.manager', $config['project']['manager']);
-        $container->setAlias('nicob.scrum.project.listener', $config['project']['listener']);
         $container->setAlias('nicob.scrum.story.manager', $config['story']['manager']);
         $container->setAlias('nicob.scrum.sandbox.manager', $config['sandbox']['manager']);
 

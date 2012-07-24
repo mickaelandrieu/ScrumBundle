@@ -11,115 +11,118 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Project controller.
  *
- * @Route("/story")
+ * @Route("/")
  */
 class StoryController extends Controller {
 
+    public function getManager() {
+        
+        return $this->get('nicob.scrum.story.manager');
+    }
+    public function getHandler() {
+
+        return $this->get('nicob.scrum.story.form.handler');
+    }
+    
+    
     /**
      * Lists all Project entities.
      *
-     * @Route("/", name="story")
+     * @Route("/project/{id_project}/story", name="scrum_story")
      * @Template()
      */
-    public function indexAction() {
-        $manager = $this->get('nicob.scrum.story.manager');
-        $entities = $manager->findAll();
-        return array(
-            'entities' => $entities,
-        );
+    public function indexAction($id_project) {
+        return [
+            'entities' => $this->getManager()->findAll(),
+            'id_project' => $id_project,
+        ];
     }
     
     /**
      * change story's status 
      *
-     * @Route("/{id}/status/{id_status}", name="story_status")
+     * @Route("/project/{id_project}/story/{id}/status/{id_status}", name="scrum_story_status")
      */
-    public function statusAction($id, $id_status) {
-        $manager = $this->get('nicob.scrum.story.manager');
-        $story = $manager->find($id);
+    public function statusAction($id_project,$id, $id_status) {
+        $story = $this->getManager()->find($id);
         
         //TODO : Create Status Manager
         $em = $this->getDoctrine()->getEntityManager();
         $status = $em->getRepository('NicoBScrumBundle:Status')->find($id_status);
         
         $story->setStatus($status);
-        $manager->update($story);
+        $this->getManager()->update($story);
         
-        return $this->redirect($this->generateUrl('home'));
+        return $this->redirect($this->generateUrl('scrum_dashboard',[
+            'id_project' => $id_project
+        ]));
     }
 
     /**
      * Finds and displays a Project entity.
      *
-     * @Route("/{id}/show", name="story_show")
+     * @Route("/project/{id_project}/story/{id}/show", name="scrum_story_show")
      * @Template()
      */
-    public function showAction($id) {
-        $manager = $this->get('nicob.scrum.story.manager');
-        $story = $manager->find($id,true);
-        
-        return array(
-            'entity' => $story
-        );
+    public function showAction($id_project,$id) {
+        return [
+            'entity' => $this->getManager()->find($id,true),
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Creates a new Project entity.
      *
-     * @Route("/create", name="story_new")
+     * @Route("/project/{id_project}/story/create", name="scrum_story_new")
      * @Template()
      */
-    public function newAction() {
-        $handler = $this->get('nicob.scrum.story.form.handler');
-        $manager = $this->get('nicob.scrum.story.manager');
-
-        if ($handler->process()) {
-            $story = $handler->getForm()->getData();
-            $manager->update($story);
+    public function newAction($id_project) {
+        if ($this->getHandler()->process()) {
+            $story = $this->getHandler()->getForm()->getData();
+            $this->getManager()->update($story);
 
             return $this->redirect($this->generateUrl('story'));
         }
 
-        return array(
-            'form' => $handler->getForm()->createView(),
-        );
+        return [
+            'form' => $this->getHandler()->getForm()->createView(),
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Displays a form to edit an existing Project entity.
      *
-     * @Route("/{id}/edit", name="story_edit")
+     * @Route("/project/{id_project}/story/{id}/edit", name="scrum_story_edit")
      * @Template()
      */
-    public function editAction($id) {
-        $handler = $this->get('nicob.scrum.story.form.handler');
-        $manager = $this->get('nicob.scrum.story.manager');
-        $story = $manager->find($id,true);
+    public function editAction($id_project,$id) {
+        $story = $this->getManager()->find($id,true);
 
-        if ($handler->process($story)) {
-            $story = $handler->getForm()->getData();
-            $manager->update($story);
+        if ($this->getHandler()->process($story)) {
+            $story = $this->getHandler()->getForm()->getData();
+            $this->getManager()->update($story);
 
             return $this->redirect($this->generateUrl('story'));
         }
 
-        return array(
+        return [
             'entity' => $story,
-            'form' => $handler->getForm()->createView(),
-        );
+            'form' => $this->getHandler()->getForm()->createView(),
+            'id_project' => $id_project,
+        ];
     }
 
     /**
      * Deletes a Project entity.
      *
-     * @Route("/{id}/delete", name="story_delete")
+     * @Route("/project/{id_project}/story/{id}/delete", name="scrum_story_delete")
      * @Method("get")
      */
     public function deleteAction($id) {
-        $manager = $this->get('nicob.scrum.story.manager');
-        $story = $manager->find($id,true);
-
-        $manager->delete($story);
+        $story = $this->getManager()->find($id,true);
+        $this->getManager()->delete($story);
 
         return $this->redirect($this->generateUrl('story'));
     }

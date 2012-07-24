@@ -1,9 +1,9 @@
 {% if story.status.id == 1 %}
-  <a href="{{ path('story_status',{'id':story.id,'id_status':5}) }}">Accept</a> <a href="{{ path('story_status',{'id':story.id,'id_status':6}) }}">Reject</a>
+  <a href="{{ path('scrum_story_status',{'id_project':id_project,'id':story.id,'id_status':5}) }}">Accept</a> <a href="{{ path('scrum_story_status',{'id_project':id_project,'id':story.id,'id_status':6}) }}">Reject</a>
 {% elseif story.status.id == 5 %}
-  <a href="{{ path('story_status',{'id':story.id,'id_status':4}) }}">Deliver</a>
+  <a href="{{ path('scrum_story_status',{'id_project':id_project,'id':story.id,'id_status':4}) }}">Deliver</a>
 {% elseif story.status.id == 4 %}
-  <a href="{{ path('story_status',{'id':story.id,'id_status':3}) }}">Finish</a>
+  <a href="{{ path('scrum_story_status',{'id_project':id_project,'id':story.id,'id_status':3}) }}">Finish</a>
 {% elseif story.status.id == 3 %}
   Closed
 {% endif %}
