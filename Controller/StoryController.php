@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-
 /**
  * Project controller.
  *
@@ -16,15 +15,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class StoryController extends Controller {
 
     public function getManager() {
-        
+
         return $this->get('nicob.scrum.story.manager');
     }
+
     public function getHandler() {
 
         return $this->get('nicob.scrum.story.form.handler');
     }
-    
-    
+
     /**
      * Lists all Project entities.
      *
@@ -37,31 +36,30 @@ class StoryController extends Controller {
             'id_project' => $id_project,
         ];
     }
-    
+
     /**
      * change story's status 
      *
      * @Route("/project/{id_project}/story/{id}/status/{id_status}", name="scrum_story_status")
      */
-
-    public function statusAction($id_project,$id, $id_status) {
+    public function statusAction($id_project, $id, $id_status) {
         $story = $this->getManager()->find($id);
         $user = $this->get('security.context')->getToken()->getUser();
-        
+
         if ($id_status == 2)
             $story->setAssignedAt($user);
 
-        
+
         //TODO : Create Status Manager
         $em = $this->getDoctrine()->getEntityManager();
         $status = $em->getRepository('NicoBScrumBundle:Status')->find($id_status);
-        
+
         $story->setStatus($status);
         $this->getManager()->update($story);
-        
-        return $this->redirect($this->generateUrl('scrum_dashboard',[
-            'id_project' => $id_project
-        ]));
+
+        return $this->redirect($this->generateUrl('scrum_dashboard', [
+                            'id_project' => $id_project
+                        ]));
     }
 
     /**
@@ -70,9 +68,9 @@ class StoryController extends Controller {
      * @Route("/project/{id_project}/story/{id}/show", name="scrum_story_show")
      * @Template()
      */
-    public function showAction($id_project,$id) {
+    public function showAction($id_project, $id) {
         return [
-            'entity' => $this->getManager()->find($id,true),
+            'entity' => $this->getManager()->find($id, true),
             'id_project' => $id_project,
         ];
     }
@@ -84,11 +82,12 @@ class StoryController extends Controller {
      * @Template()
      */
     public function newAction($id_project) {
+        $this->getHandler()->setProjectId($id_project);
         if ($this->getHandler()->process()) {
             $story = $this->getHandler()->getForm()->getData();
             $this->getManager()->update($story);
 
-            return $this->redirect($this->generateUrl('story'));
+            return $this->redirect($this->generateUrl('scrum_story', ['id_project' => $id_project]));
         }
 
         return [
@@ -103,14 +102,15 @@ class StoryController extends Controller {
      * @Route("/project/{id_project}/story/{id}/edit", name="scrum_story_edit")
      * @Template()
      */
-    public function editAction($id_project,$id) {
-        $story = $this->getManager()->find($id,true);
-
+    public function editAction($id_project, $id) {
+        $story = $this->getManager()->find($id, true);
+        $this->getHandler()->setProjectId($id_project);
+        
         if ($this->getHandler()->process($story)) {
             $story = $this->getHandler()->getForm()->getData();
             $this->getManager()->update($story);
 
-            return $this->redirect($this->generateUrl('story'));
+            return $this->redirect($this->generateUrl('scrum_story', ['id_project' => $id_project]));
         }
 
         return [
@@ -127,7 +127,7 @@ class StoryController extends Controller {
      * @Method("get")
      */
     public function deleteAction($id) {
-        $story = $this->getManager()->find($id,true);
+        $story = $this->getManager()->find($id, true);
         $this->getManager()->delete($story);
 
         return $this->redirect($this->generateUrl('story'));

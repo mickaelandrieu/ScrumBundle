@@ -26,9 +26,7 @@
                     <div class="nav-collapse collapse">
 
                         <ul class="nav">
-                            <li class="{% if app.request.attributes.get('_route') == 'scrum_project' %}active{% endif %}">
-                                <a href="{{ path('scrum_project',{'id_project':id_project}) }}">Project</a>
-                            </li>
+                            
                             <li class="{% if app.request.attributes.get('_route') == 'scrum_backlog' %}active{% endif %}">
                                 <a href="{{ path('scrum_backlog',{'id_project':id_project}) }}">Backlog</a>
                             </li>

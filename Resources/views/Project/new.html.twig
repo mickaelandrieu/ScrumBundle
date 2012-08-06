@@ -1,11 +1,6 @@
-{% extends 'NicoBScrumBundle::layout.html.twig' %}
-
-
-{% block content %}
-
 <h1>Project creation</h1>
 
-<form action="{{ path('project_new') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('scrum_project_new') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button class="btn btn-success" type="submit">Create</button>
@@ -14,9 +9,8 @@
 
 <ul class="record_actions">
     <li>
-        <a class="btn btn-primary" href="{{ path('project') }}">
+        <a class="btn btn-primary" href="{# path('project') #}">
             Back to the list
         </a>
     </li>
 </ul>
-{% endblock %}

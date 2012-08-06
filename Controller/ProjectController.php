@@ -53,17 +53,17 @@ class ProjectController extends Controller {
     /**
      * Creates a new Project entity.
      *
-     * @Route("/project/{id_project}/project/create", name="scrum_project_new")
+     * @Route("/project/create", name="scrum_project_new")
      * @Template("NicoBScrumBundle:Project:new.html.twig")
      */
-    public function newAction($id_project) {
+    public function newAction() {
         if ($this->getHandler()->process()) {
-            return $this->redirect($this->generateUrl('project'));
+            $id = $this->getHandler()->getForm()->getData()->getId();
+            return $this->redirect($this->generateUrl('scrum_dashboard',['id_project'=>$id]));
         }
 
         return [
-            'form' => $this->getHandler()->getForm()->createView(),
-            'id_project' => $id_project,
+            'form' => $this->getHandler()->getForm()->createView()
         ];
     }
 

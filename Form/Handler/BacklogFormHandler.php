@@ -12,6 +12,7 @@ class BacklogFormHandler extends BaseFormHandler
 {
 
     protected $projectManager;
+    protected $project;
     protected $session;
     protected $manager;
 
@@ -22,12 +23,14 @@ class BacklogFormHandler extends BaseFormHandler
         $this->session = $session;
         $this->manager = $manager;
     }
+    
+    public function setProject($id){
+        $this->project = $this->projectManager->find($id,true);
+    }
 
     public function onSuccess() {
         $backlog = $this->form->getData();
-        
-        $id = $this->session->get('project');
-        $backlog->setProject($this->projectManager->find($id,true));
+        $backlog->setProject($this->project);
         $this->manager->update($backlog);
     }
 }

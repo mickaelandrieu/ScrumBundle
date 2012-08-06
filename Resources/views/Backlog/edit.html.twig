@@ -5,7 +5,7 @@
 
 <h1>Backlog edit</h1>
 
-<form action="{{ path('backlog_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('scrum_backlog_edit', { 'id': entity.id,'id_project':id_project }) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button class="btn btn-primary" type="submit">Edit</button>
@@ -14,7 +14,7 @@
 
 <ul class="record_actions">
     <li>
-        <a class="btn btn-primary" href="{{ path('backlog') }}">
+        <a class="btn btn-primary" href="{{ path('scrum_backlog',{'id_project':id_project}) }}">
             Back to the list
         </a>
     </li>

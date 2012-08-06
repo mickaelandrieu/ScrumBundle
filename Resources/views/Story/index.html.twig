@@ -17,19 +17,19 @@
     <tbody>
     {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('story_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('scrum_story_show', { 'id': entity.id,'id_project': id_project }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.name }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                     <ul>
                         <li>
-                            <a class="" href="{{ path('story_show', { 'id': entity.id }) }}">show</a>
+                            <a class="" href="{{ path('scrum_story_show', { 'id': entity.id,'id_project': id_project }) }}">show</a>
                         </li>
                         <li>
-                            <a class="" href="{{ path('story_edit', { 'id': entity.id }) }}">edit</a>
+                            <a class="" href="{{ path('scrum_story_edit', { 'id': entity.id,'id_project': id_project }) }}">edit</a>
                         </li>
                         <li>
-                            <a class="" href="{{ path('story_delete',{'id':entity.id}) }}">Delete</a>
+                            <a class="" href="{{ path('scrum_story_delete',{'id':entity.id,'id_project': id_project}) }}">Delete</a>
                         </li>
                     </ul>
                 </td>
@@ -40,7 +40,7 @@
 
     <ul>
         <li>
-            <a class="btn btn-success" href="{{ path('story_new') }}">
+            <a class="btn btn-success" href="{{ path('scrum_story_new',{'id_project': id_project }) }}">
                 Create a new entry
             </a>
         </li>

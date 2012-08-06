@@ -15,8 +15,9 @@ class StoryFormHandler extends BaseFormHandler {
     protected $manager;
     protected $sandboxManager;
     protected $session;
+    protected $projectId;
 
-    public function __construct(Form $form, Request $request,Session $session, SecurityContext $securityContext, StoryManager $manager,SandboxManager $sandboxManager) {
+    public function __construct(Form $form, Request $request, Session $session, SecurityContext $securityContext, StoryManager $manager, SandboxManager $sandboxManager) {
         parent::__construct($form, $request);
         $this->securityContext = $securityContext;
         $this->manager = $manager;
@@ -24,20 +25,21 @@ class StoryFormHandler extends BaseFormHandler {
         $this->session = $session;
     }
 
+    public function setProjectId($id) {
+        $this->projectId = $id;
+    }
+
     public function onSuccess() {
         $story = $this->form->getData();
         $story->setCreatedBy($this->securityContext->getToken()->getUser());
-        if (!$story->getBacklog())
-        {
-            $id = $this->session->get('project');
+        if (!$story->getBacklog()) {
             $sandbox = $this->sandboxManager->findOneBy([
-                'project' => $id
-            ],true);
+                'project' => $this->projectId
+                    ], true);
             $story->setSandbox($sandbox);
-            
-            
+        } else {
+            $story->setSandbox(null);
         }
-        $story->setSandbox(null);
         $this->manager->update($story);
     }
 

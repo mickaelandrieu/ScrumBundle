@@ -33,7 +33,7 @@ class DashboardController extends Controller {
         $project = $this->getProjectManager()->find($id_project);
         $currentBacklog = $this->getBacklogManager()->getCurrent($project);
         $sandbox = $project->getSandbox();
-        
+
         return [
             'project' => $project,
             'id_project' => $id_project,

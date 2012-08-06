@@ -5,7 +5,7 @@
 
 <h1>Story creation</h1>
 
-<form action="{{ path('story_new') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('scrum_story_new',{'id_project':id_project}) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
@@ -14,7 +14,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('story') }}">
+        <a href="{{ path('scrum_story',{'id_project':id_project}) }}">
             Back to the list
         </a>
     </li>

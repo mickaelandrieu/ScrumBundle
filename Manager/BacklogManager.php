@@ -19,11 +19,11 @@ class BacklogManager extends BaseManager {
        $qb=$this->em->createQueryBuilder();
        $qb->select('b')
             ->from($this->class, 'b')
-            ->where('b = ?1 AND CURRENT_DATE() BETWEEN b.startAt AND b.finishAt');
+            ->where('b.project = ?1 AND CURRENT_DATE() BETWEEN b.startAt AND b.finishAt');
        $query = $qb->getQuery();
        $query->setParameter(1,$project);
        
-       return $query->getOneOrNullResult();
+       return $query->getSingleResult();
    }
    
 }

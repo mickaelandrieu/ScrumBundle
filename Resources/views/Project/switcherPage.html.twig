@@ -1,6 +1,27 @@
-<form class="navbar-search pull-right" action="#" method="post" {{ form_enctype(form) }}>
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+
+        {% stylesheets
+        '@NicoBScrumBundle/Resources/public/bootstrap/css/bootstrap.css'
+        '@NicoBScrumBundle/Resources/public/css/helpers.css'
+        '@NicoBScrumBundle/Resources/public/css/scrum.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+    </head>
+    <body>
+
+        <form class="" action="#" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form.project) }}
-    
-        <button class="btn btn-primary" type="submit">Changer de projet</button>
-    
-</form>
+
+                <button class="btn btn-primary" type="submit">Changer de projet</button>
+
+            </form>
+        
+        {% render 'NicoBScrumBundle:Project:new' %}
+        
+        
+        </body>
+</html>

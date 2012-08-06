@@ -59,11 +59,12 @@ class BacklogController extends Controller {
      */
     public function newAction($id_project) {
 
+        $this->getHandler()->setProject($id_project);
         if ($this->getHandler()->process()) {
             $backlog = $this->getHandler()->getForm()->getData();
             $this->getManager()->update($backlog);
 
-            return $this->redirect($this->generateUrl('backlog'));
+            return $this->redirect($this->generateUrl('scrum_backlog',['id_project'=>$id_project]));
         }
 
         return [
@@ -79,13 +80,14 @@ class BacklogController extends Controller {
      * @Template()
      */
     public function editAction($id_project,$id) {
+        $this->getHandler()->setProject($id_project);
         $backlog = $this->getManager()->find($id,true);
 
         if ($this->getHandler()->process($backlog)) {
             $backlog = $this->getHandler()->getForm()->getData();
             $this->getManager()->update($backlog);
 
-            return $this->redirect($this->generateUrl('backlog'));
+            return $this->redirect($this->generateUrl('scrum_backlog',['id_project' => $id_project]));
         }
 
         return [
@@ -98,14 +100,14 @@ class BacklogController extends Controller {
     /**
      * Deletes a Project entity.
      *
-     * @Route("project/{id_project}/backlog/{id}/delete", name="backlog_delete")
+     * @Route("project/{id_project}/backlog/{id}/delete", name="scrum_backlog_delete")
      * @Method("get")
      */
     public function deleteAction($id_project,$id) {
         $backlog = $this->getManager()->find($id,true);
         $this->getManager()->delete($backlog);
 
-        return $this->redirect($this->generateUrl('backlog',[
+        return $this->redirect($this->generateUrl('scrum_backlog',[
             'id_project'=>$id_project
             ]
         ));

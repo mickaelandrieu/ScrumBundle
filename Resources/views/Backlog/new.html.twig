@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Backlog creation</h1>
 
-<form action="{{ path('backlog_new') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('scrum_backlog_new',{'id_project':id_project}) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
@@ -13,7 +13,7 @@
 
 <ul class="record_actions">
     <li>
-        <a class="btn btn-primary" href="{{ path('backlog') }}">
+        <a class="btn btn-primary" href="{{ path('scrum_backlog',{'id_project':id_project}) }}">
             Back to the list
         </a>
     </li>
