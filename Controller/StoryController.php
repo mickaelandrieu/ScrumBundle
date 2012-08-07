@@ -125,11 +125,11 @@ class StoryController extends Controller {
      * @Route("/project/{id_project}/story/{id}/delete", name="scrum_story_delete")
      * @Method("get")
      */
-    public function deleteAction($id) {
+    public function deleteAction($id_project,$id) {
         $story = $this->getManager()->find($id, true);
         $this->getManager()->delete($story);
 
-        return $this->redirect($this->generateUrl('story'));
+        return $this->redirect($this->generateUrl('scrum_story',['id_project'=>$id_project]));
     }
 
 }

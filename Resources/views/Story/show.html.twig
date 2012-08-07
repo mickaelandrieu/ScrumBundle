@@ -28,17 +28,17 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('story') }}">
+        <a href="{{ path('scrum_story',{'id_project':id_project}) }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('story_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('scrum_story_edit', { 'id': entity.id,'id_project':id_project }) }}">
             Edit
         </a>
     </li>
     <li>
-        <a class="btn btn-danger" href="{{ path('story_delete',{'id':entity.id}) }}">Delete</a>
+        <a class="btn btn-danger" href="{{ path('scrum_story_delete',{'id':entity.id,'id_project':id_project}) }}">Delete</a>
     </li>
 </ul>
 {% endblock %}
