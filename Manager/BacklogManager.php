@@ -23,7 +23,7 @@ class BacklogManager extends BaseManager {
        $query = $qb->getQuery();
        $query->setParameter(1,$project);
        
-       return $query->getSingleResult();
+       return $query->getOneOrNullResult();
    }
    
 }

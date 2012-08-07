@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Project controller.
  *
- * @Route("/")
  */
 class BacklogController extends Controller {
 
@@ -54,7 +53,7 @@ class BacklogController extends Controller {
     /**
      * Creates a new Project entity.
      *
-     * @Route("/project/{id_project}/create", name="scrum_backlog_new")
+     * @Route("/project/{id_project}/backlog/create", name="scrum_backlog_new")
      * @Template()
      */
     public function newAction($id_project) {

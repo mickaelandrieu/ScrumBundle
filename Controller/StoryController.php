@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Project controller.
  *
- * @Route("/")
  */
 class StoryController extends Controller {
 
